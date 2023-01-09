@@ -1,8 +1,27 @@
-from fastapi import FastAPI, Request
+from click.utils import text_streams
 import uvicorn
+from fastapi import FastAPI
+from database import Database
+from routes import root
+from crud import get_events
 
 
+db=Database()
+test_GET_event=get_events(db)
 app = FastAPI()
+
+app.include_router(root.router)
+
+
+
+
+
+
+
+
+
+
+
 
 # @app.on_event("startup")
 # def startup_db_client():
@@ -17,11 +36,6 @@ app = FastAPI()
 
 
 
-#------------------------------
-# endpoints
-@app.get("/")
-def root(request:Request):
-    return {"message": "hello"}
 
 
 
