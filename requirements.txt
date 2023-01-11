@@ -2,4 +2,4 @@ fastapi
 uvicorn
 psycopg2-binary
 pytest
-dotenv
+python-dotenv

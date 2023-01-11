@@ -4,10 +4,6 @@ import sys
 import psycopg2
 
 load_dotenv()
-# POSTGRES_USER=os.getenv("POSTGRES_USER")
-# POSTGRES_PASSWORD=os.getenv("POSTGRES_PASSWORD")
-# POSTGRES_HOST=os.getenv("POSTGRES_HOST")
-# POSTGRES_PORT=os.getenv("POSTGRES_PORT")
 
 class Database:
     def __init__(self):
