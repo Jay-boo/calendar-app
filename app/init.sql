@@ -33,46 +33,11 @@ CREATE TABLE event (
       ON DELETE CASCADE
 );
 
-INSERT INTO event (id_event,nom, description, type_event) VALUES
-(1,'reunion1', 'Reunion marketing', 1),
-(2,'Running', ' ', 2)
+INSERT INTO event (id_event,nom, description, type_event_id) VALUES
+(1,'reunion1', 'Reunion marketing', 0),
+(2,'Running', ' ', 1)
 ;
 
--- CREATE TABLE statistique_monstre
--- (
---     id_monstre integer NOT NULL,
---     force integer,
---     magie integer,
---     agilite integer,
---     defense integer,
---     points_de_vie integer,
---     CONSTRAINT statistique_monstre_pkey PRIMARY KEY (id_monstre),
---     CONSTRAINT statistique_monstre_id_monstre_fkey FOREIGN KEY (id_monstre)
---         REFERENCES public.monstre (id_monstre) MATCH SIMPLE
---         ON UPDATE CASCADE
---         ON DELETE CASCADE
--- );
---
--- INSERT INTO statistique_monstre (id_monstre, force, magie, agilite, defense, points_de_vie) VALUES
--- (1,60,0,20,50,1500),
--- (2,30,0,10,20,400),
--- (3,5,30,30,20,300),
--- (4,15,15,15,15,300),
--- (5,100,100,50,100,3000),
--- (6,20,0,10,20,200),
--- (7,40,50,40,30,800),
--- (8,70,0,20,80,5000),
--- (9,50,30,0,45,1250),
--- (10,100,30,100,80,600),
--- (11,20,50,20,100,450),
--- (12,800,800,800,800,10000),
--- (13,1500,1500,300,1500,20000),
--- (14,60,150,50,50,400),
--- (15,30,100,80,50,163),
--- (16,50,150,30,80,480),
--- (17,80,120,180,65,190),
--- (18,50,0,30,80,1000),
--- (19,600,600,600,600,7000);
 
 ALTER SEQUENCE id_event_seq RESTART WITH 2;
 ALTER SEQUENCE id_type_event_seq RESTART WITH 11;

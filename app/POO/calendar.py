@@ -1,11 +1,20 @@
-from asyncio.locks import Event
 
-from click.types import datetime
+from datetime import datetime
+from app.database import Database
+from app.POO.event import Event
 
 
 class Calendar:
     def __init__(self) -> None:
         self.events=[]
+
+    def add_event(self,event:Event):
+        event.add_event_to_calendar(self)
+
+    def conflict_time(self,start_time:datetime,end_point:datetime):
+        for event in events:
+            
+
 
     def get_events(self):
         pass
@@ -13,8 +22,6 @@ class Calendar:
     def remove_event(self,event:Event):
         pass
 
-    def add_event(self,event:Event):
-        pass
 
 
 

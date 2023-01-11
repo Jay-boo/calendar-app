@@ -7,11 +7,14 @@ from crud import get_events
 
 
 db=Database()
-test_GET_event=get_events(db)
+# Load the calendar
+#calendar=load_calendar()
+# In the API endpoints use calendar methodes linked to crud methodes 
 app = FastAPI()
 
 app.include_router(root.router)
 
+test_GET_event=get_events(db)
 
 
 
