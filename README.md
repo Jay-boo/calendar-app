@@ -10,7 +10,9 @@ Table event <-> information Events:
 id_event | title | description | type | t_start| t_end | created_at | updated_at | propriety
 
 
-Table :
+
+Table event <-> Reminder :
+id_event | reminder_time_delta
 
 
 

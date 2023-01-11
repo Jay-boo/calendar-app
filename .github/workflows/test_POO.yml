@@ -1,0 +1,21 @@
+name: test_python_POO
+
+on:
+  push:
+    branches:
+      - "main"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: checkout
+        uses: actions/checkout@v3
+      -
+        name: install requirements
+        run: pip install -r requirements.txt
+      -
+        name: launch tests
+        run: cd app
+        run: python -m unittest discover test

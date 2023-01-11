@@ -1,40 +1,29 @@
-
 from datetime import datetime
-from app.database import Database
-from app.POO.event import Event
-
+from typing import List
+from POO.database import Database
+from POO.event import Event
+from POO.addStrategy import addStrategy
 
 class Calendar:
     def __init__(self) -> None:
         self.events=[]
 
     def add_event(self,event:Event):
-        event.add_event_to_calendar(self)
+        assert event.start_time> datetime.now()
+        assert isinstance(event.strategy,addStrategy)
+        add_operation=event.strategy.add(event.start_time,event.end_time,self)
+        if  add_operation !=None :
+            event.start_time,event.end_time=add_operation[0],add_operation[1]
+            self.events.append(event)
 
-    def conflict_time(self,start_time:datetime,end_point:datetime):
-        for event in events:
             
 
 
-    def get_events(self):
-        pass
+    def get_events(self)->List[Event]:
+        return self.events
 
     def remove_event(self,event:Event):
-        pass
+        self.events.remove(event)
 
 
-
-
-    #--------------------------------------------
-    # update methodes
-
-    def update_time_period_event(self,event:Event,new_start_time:datetime,new_end_time:datetime):
-        pass
-
-    def update_title_event(self,event:Event,new_title:str):
-        pass
-
-    def update_desc_event(self,event:Event,new_desc:str):
-        pass
-    
 

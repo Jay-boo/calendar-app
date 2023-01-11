@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from datetime import datetime
-from app.POO.calendar import Calendar
+from calendar import Calendar
 
 
 class addStrategy(ABC):

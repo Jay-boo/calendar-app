@@ -1,20 +1,20 @@
-from click.utils import text_streams
 import uvicorn
 from fastapi import FastAPI
-from database import Database
+from POO.database import Database
+from POO.calendar import Calendar
 from routes import root
-from crud import get_events
-
+from crud import load_calendar 
 
 db=Database()
-# Load the calendar
-#calendar=load_calendar()
-# In the API endpoints use calendar methodes linked to crud methodes 
-app = FastAPI()
 
+# Load the calendar
+# calendar=load_calendar(db,0)
+calendar=Calendar(
+
+        )
+app = FastAPI()
 app.include_router(root.router)
 
-test_GET_event=get_events(db)
 
 
 
