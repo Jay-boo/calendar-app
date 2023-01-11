@@ -17,5 +17,4 @@ jobs:
         run: pip install -r requirements.txt
       -
         name: launch tests
-        run: cd app
-        run: python -m unittest discover test
+        run: cd app && python -m unittest discover test
