@@ -9,7 +9,7 @@ class allOrNothingStrategy(addStrategy):
         
         for event in calendar.get_events():
             if event.is_in_time_interval(start_time,end_time):
-                print(f"event not added cause other evenement is scheduled : ${event.title}")
+                print(f"event not added cause other evenement is scheduled : {event.title}")
                 return None 
         print("event added using addOrNothingStrategy")
         return [start_time,end_time]

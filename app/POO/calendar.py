@@ -1,3 +1,4 @@
+from calendar import calendar
 from datetime import datetime
 from typing import List
 from POO.database import Database
@@ -9,7 +10,7 @@ class Calendar:
         self.events=[]
 
     def add_event(self,event:Event):
-        assert event.start_time> datetime.now()
+        # assert event.start_time> datetime.now()
         assert isinstance(event.strategy,addStrategy)
         add_operation=event.strategy.add(event.start_time,event.end_time,self)
         if  add_operation !=None :
@@ -24,6 +25,14 @@ class Calendar:
 
     def remove_event(self,event:Event):
         self.events.remove(event)
+
+
+    def __str__(self) -> str:
+        msg=""
+        for event in self.get_events():
+            msg+=str(event)+"\n"
+        return msg
+
 
 
 

@@ -1,7 +1,7 @@
 from datetime import datetime
-from sys import stderr
 from POO.addStrategy import addStrategy
 from POO.calendar import Calendar
+from copy import copy
 
 class priorityStrategy(addStrategy):
 
@@ -11,11 +11,13 @@ class priorityStrategy(addStrategy):
         Il est possible que l'event se retrouve découper commme deux evenements. 
         """
         for event in calendar.get_events():
-            if event.is_in_time_terminal(start_time,end_time):
+            if event.is_in_time_interval(start_time,end_time):
 
                 if(event.start_time<start_time and event.end_time > end_time):
+                    print("event couper en 2")
                     #On coupe l'event en 2
-                    event_bis=event
+                    # event_bis=event
+                    event_bis=copy(event)
                     start_time_bis=end_time
                     end_time_bis=event.end_time
                     event.end_time =start_time
@@ -25,7 +27,6 @@ class priorityStrategy(addStrategy):
                     
                     
 
-                    #Normallement y'aura pas de conflict
 
 
                 elif event.start_time<start_time and event.end_time < end_time: 
