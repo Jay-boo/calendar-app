@@ -1,6 +1,6 @@
 
 from unittest import TestCase 
-from datetime import datetime
+from datetime import datetime, timedelta
 from POO.eventSchool import EventSchool
 from POO.eventLeasure import EventLeasure
 
@@ -17,51 +17,56 @@ class TestEvent(TestCase):
 
 
         """
+        now=datetime.now()
         event=EventSchool(
                 "Cours SQL",
                 "Apprentissage des methodes SQL et noSQL",
-                datetime(2023,1,13,9),
-                datetime(2023,1,13,12),
+                now+timedelta(hours=3),
+                now+timedelta(hours=6),
                 105
         )
 
-        # Le début et la fin de l'evement sont tout les deux en dehors de l'intervalle 
-        # avec event_start > intervalle_end   
+        #  l'event est strictment après l'interval:False
         self.assertEqual(
-            event.is_in_time_interval(datetime(2023,1,13,14),datetime(2023,1,13,17)),False
+            event.is_in_time_interval(now+timedelta(hours=1),now+timedelta(hours=3)),False
+        )
+        self.assertEqual(
+            event.is_in_time_interval(now+timedelta(hours=1),now+timedelta(hours=2)),False
         )
 
-        # Le début de l'evement  est dans l'intervalle mais pas la fin²
-        # avec intervall_start<event_start < intervalle_end   &intervall_end < event_end 
+        #L'event est strictment avant l'interval : False
         self.assertEqual(
-            event.is_in_time_interval(datetime(2023,1,13,11),datetime(2023,1,13,17)),True
+            event.is_in_time_interval(now+timedelta(hours=6),now+timedelta(hours=7)),False
+        )
+        self.assertEqual(
+            event.is_in_time_interval(now+timedelta(hours=7),now+timedelta(hours=8)),False
         )
 
-        # Inversement
+        # L'event commence avant l'interval mais fini dans l'interval : True
         self.assertEqual(
-            event.is_in_time_interval(datetime(2023,1,13,8),datetime(2023,1,13,11)),True
-        )
-
-
-        # Le début et la fin de l'evement sont tout les deux en dehors de l'intervalle 
-        # avec event_start < intervalle_start   & event_end > intervalle_end
-        self.assertEqual(
-            event.is_in_time_interval(datetime(2023,1,13, 8),datetime(2023,1,13,17)),True
-        )
-
-        # Le début et la fin de l'evement sont tout les deux dans l'intervalle 
-        # avec event_start > intervalle_start   & event_end < intervalle_end
-        self.assertEqual(
-            event.is_in_time_interval(datetime(2023,1,13, 10),datetime(2023,1,13,11)),True
-        )
-
-        self.assertEqual(
-            event.is_in_time_interval(datetime(2023,1,13,8),datetime(2023,1,13,9)),False
-        )
-
-        self.assertEqual(
-            event.is_in_time_interval(datetime(2023,1,13,12),datetime(2023,1,13,14)),False
+            event.is_in_time_interval(now+timedelta(hours=5),now+timedelta(hours=7)),True 
         )
 
 
+        # L'event commence durant l'interval mais fini après l'interval : True
+        self.assertEqual(
+            event.is_in_time_interval(now+timedelta(hours=2),now+timedelta(hours=5)),True 
+        )
+
+
+
+        # L'event commence et termine au cours de l'interval
+        self.assertEqual(
+            event.is_in_time_interval(now+timedelta(hours=2),now+timedelta(hours=7)),True 
+        )
+
+        #L'event commence avant l'interval et se termine après
+        self.assertEqual(
+            event.is_in_time_interval(now+timedelta(hours=4),now+timedelta(hours=5)),True 
+        )
+
+        #L'event ==interval
+        self.assertEqual(
+            event.is_in_time_interval(now+timedelta(hours=3),now+timedelta(hours=6)),True 
+        )
 

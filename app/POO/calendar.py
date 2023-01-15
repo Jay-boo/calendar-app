@@ -10,7 +10,7 @@ class Calendar:
         self.events=[]
 
     def add_event(self,event:Event):
-        # assert event.start_time> datetime.now()
+        assert event.start_time> datetime.now()
         assert isinstance(event.strategy,addStrategy)
         add_operation=event.strategy.add(event.start_time,event.end_time,self)
         if  add_operation !=None :

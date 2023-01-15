@@ -1,10 +1,15 @@
+from dotenv import load_dotenv
 import uvicorn
 from fastapi import FastAPI
 from POO.database import Database
 from POO.calendar import Calendar
-from routes import root
-from crud import load_calendar 
+from routes import root, auth
+from fastapi import FastAPI,  HTTPException, status
+from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from tortoise.contrib.fastapi import register_tortoise
+from tortoise.contrib.pydantic import pydantic_model_creator
 
+load_dotenv()
 db=Database()
 
 # Load the calendar
@@ -13,36 +18,17 @@ calendar=Calendar(
 
         )
 app = FastAPI()
+
+register_tortoise(
+    app, 
+    db_url=f"postgres://postgres:a@127.0.0.1:5432/calendarapp",
+    modules={'models': ['models']},
+    generate_schemas=True,
+    add_exception_handlers=True
+)
+
 app.include_router(root.router)
-
-
-
-
-
-
-
-
-
-
-
-
-# @app.on_event("startup")
-# def startup_db_client():
-#     app.mongodb_client = MongoClient(config["ATLAS_URI"])
-#     app.database = app.mongodb_client[config["DB_NAME"]]
-#
-# @app.on_event("shutdown")
-# def shutdown_db_client():
-#     app.mongodb_client.close()
-#
-# app.include_router(book_router, tags=["books"], prefix="/book")
-
-
-
-
-
-
-
+app.include_router(auth.router)
 
 
 
