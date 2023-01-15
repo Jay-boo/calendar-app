@@ -37,8 +37,8 @@ def get_all_items():
     items=session.query(model.User_table).all()
     return items
 
-@app.post("/user/", response_model=schemas.User_table,status_code=status.HTTP_201_CREATED)
-def create_user(user: schemas.User_table):
+@app.post("/user/", response_model=schemas.User_table_create,status_code=status.HTTP_201_CREATED)
+def create_user(user: schemas.User_table_create):
     test_user =session.query(model.User_table).filter(model.User_table.username==user.username).first()
 
     if test_user is not None:

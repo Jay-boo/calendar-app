@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String,Sequence
 from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
@@ -6,7 +6,7 @@ Base = declarative_base()
 class User_table(Base):
     __tablename__ = 'User_table'
     __table_args__ = {'quote':False,'extend_existing':True} 
-    # user_id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer,Sequence('user_id_seq'), primary_key=True, index=True)
     username = Column(String, nullable=False , primary_key=True)
     password = Column(String, nullable=False)
 
@@ -14,7 +14,7 @@ class User_table(Base):
 class User_calendar(Base):
     __tablename__ = "User_calendar"
     __table_args__ = {'quote':False,'extend_existing':True} 
-    calendar_id = Column(Integer, primary_key=True, index=True)
+    calendar_id = Column(Integer,Sequence('calendar_id_seq'), primary_key=True, index=True)
     user_id = Column(Integer, nullable=False)
 
 
@@ -23,7 +23,7 @@ class User_calendar(Base):
 class Calendar(Base):
     __tablename__ = "Calendar"
     __table_args__ = {'quote':False,'extend_existing':True} 
-    event_id = Column(Integer, primary_key=True, index=True)
+    event_id = Column(Integer, Sequence('calendar_id_seq'),primary_key=True, index=True)
     calendar_id = Column(Integer, nullable=False)
     created_at = Column(String, nullable=False)
     start_date = Column(String, nullable=False)

@@ -2,16 +2,19 @@ from typing import List
 from pydantic import BaseModel
 
 class User_table_create(BaseModel):
-    #user_id: int
+    # user_id: int
     username: str
     password: str
     class Config:
         orm_mode = True
 
-class User_table(User_table_create):
+class User_table(BaseModel):
+    user_id: int
     username: str
+    password: str
     class Config:
         orm_mode = True
+
 
 class User_calendar(BaseModel):
     user_id: int
