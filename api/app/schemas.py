@@ -26,6 +26,7 @@ class User_table(BaseModel):
 
 class User_calendar_create(BaseModel):
     user_id: int
+    name: str
     #calendar_id: int
     class Config:
         orm_mode = True
@@ -34,6 +35,7 @@ class User_calendar_create(BaseModel):
 class User_calendar(BaseModel):
     user_id: int
     calendar_id: int
+    name: str
     class Config:
         orm_mode = True
 

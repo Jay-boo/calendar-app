@@ -141,9 +141,24 @@ def create_user(user: schemas.User_table_create):
     session.commit()
     return db_user
 
+#see user by name
 @app.get("/user/{username}", response_model=schemas.User_table)
 def read_user(username: str):
     db_user = session.query(model.User_table).filter(model.User_table.username == username).first()
     if db_user is None:
         raise HTTPException(status_code=404, detail="User not found")
     return db_user
+
+
+##Calendar##
+## Create calendar
+
+## Add event to calendar
+
+
+##get all calendar of a user
+@app.get('/calendar_user/{user_id}',response_model=List[schemas.Calendar],status_code=200)
+def get_all_calendar(current_user: schemas.User_table = Depends(get_current_user)):
+    id=current_user.user_id
+    list_calendar = session.query(model.User_calendar).filter(model.User_table.user_id==id).all()
+    return list_calendar
