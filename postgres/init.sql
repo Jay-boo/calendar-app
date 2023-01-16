@@ -35,7 +35,8 @@ CREATE TABLE User_table (
 -- Create the User_calendar table
 CREATE TABLE User_calendar (
     user_id INTEGER REFERENCES User_table(user_id),
-    calendar_id INTEGER PRIMARY KEY
+    calendar_id INTEGER PRIMARY KEY,
+    name VARCHAR(255)
 );
 
 -- Create the Calendar table
