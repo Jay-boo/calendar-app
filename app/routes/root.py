@@ -1,5 +1,7 @@
+from typing import List
 from POO.calendar import Calendar
 from fastapi import APIRouter,Request, Depends
+from models.user import User_account
 from routes.auth import User_Pydantic, get_current_user 
 
 
@@ -18,33 +20,3 @@ async def get_user(user: User_Pydantic=Depends(get_current_user)):
 
 
 
-
-
-
-
-
-
-@router.get("/calendar")
-async def get_calendar():
-    return  Calendar()
-
-
-@router.get("/calendar{id}")
-async def get_calendar_by_id(id):
-    return Calendar()
-
-
-@router.post("/calendar")
-async def post_calendar(calendar):
-    return  Calendar()
-
-
-
-@router.put("/calendar{id}")
-async def put_calendar(id,data):
-    return  Calendar()
-
-
-@router.delete("/calendar{id}")
-async def delete_calendar(id):
-    return  Calendar()

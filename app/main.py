@@ -3,7 +3,7 @@ import uvicorn
 from fastapi import FastAPI
 from POO.database import Database
 from POO.calendar import Calendar
-from routes import root, auth
+from routes import root, auth ,calendar_router
 from fastapi import FastAPI,  HTTPException, status
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from tortoise.contrib.fastapi import register_tortoise
@@ -14,21 +14,19 @@ db=Database()
 
 # Load the calendar
 # calendar=load_calendar(db,0)
-calendar=Calendar(
-
-        )
 app = FastAPI()
 
 register_tortoise(
     app, 
     db_url=f"postgres://postgres:a@127.0.0.1:5432/calendarapp",
-    modules={'models': ['models']},
+    modules={'models': ['models.user','models.calendarModel']},
     generate_schemas=True,
     add_exception_handlers=True
 )
 
 app.include_router(root.router)
 app.include_router(auth.router)
+app.include_router(calendar_router.router)
 
 
 

@@ -4,7 +4,7 @@ from fastapi import  Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from passlib.hash import bcrypt
 from tortoise.contrib.pydantic import pydantic_model_creator
-from models import User_account
+from models.user import User_account
 
 
 
@@ -13,6 +13,8 @@ JWT_SECRET="mysecret"
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl='token')
 
 
+#------------
+# Create Schema from tortoise model
 User_Pydantic =pydantic_model_creator(User_account,name='User')
 UserIn_Pydantic=pydantic_model_creator(User_account,name='UserIn',exclude_readonly=True)
 
@@ -34,7 +36,6 @@ async def authenticate_user(username:str,password:str):
 async def get_current_user(token:str=Depends(oauth2_scheme)):
         try: 
                 payload=jwt.decode(token,JWT_SECRET,algorithms=['HS256'])
-                print(payload)
                 user=await User_account.get(id=payload.get('id'))
         except:
                 raise HTTPException(
