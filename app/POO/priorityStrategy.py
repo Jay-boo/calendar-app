@@ -29,13 +29,13 @@ class priorityStrategy(addStrategy):
 
 
 
-                elif event.start_time<start_time and event.end_time < end_time: 
+                elif event.start_time<start_time and event.end_time <= end_time: 
                     event.end_time = start_time
 
-                elif event.start_time> start_time and event.end_time <end_time:
+                elif event.start_time>= start_time and event.end_time <=end_time:
                     calendar.remove_event(event)
 
-                elif event.start_time> start_time and event.end_time >end_time:
+                elif event.start_time>=start_time and event.end_time >end_time:
                     event.start_time=end_time
         print("event added using priorityStartegy")
         return [start_time,end_time]

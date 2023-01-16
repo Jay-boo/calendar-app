@@ -41,4 +41,3 @@ INSERT INTO event (id_event,nom, description, type_event_id) VALUES
 
 ALTER SEQUENCE id_event_seq RESTART WITH 2;
 ALTER SEQUENCE id_type_event_seq RESTART WITH 11;
-

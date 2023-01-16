@@ -4,7 +4,7 @@ from POO.event import Event
 from POO.calendar import Calendar
 
 class EventLeasure(Event):
-    def __init__(self,title:str,desc:str,start_time:datetime,end_time:datetime,activity:int) -> None:
+    def __init__(self,title:str,desc:str,start_time:datetime,end_time:datetime,activity:str) -> None:
         super().__init__(title,desc,start_time,end_time)
         self.property=activity
         self.type="leasure"

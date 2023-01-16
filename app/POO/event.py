@@ -43,13 +43,8 @@ class Event(ABC):
 
 
 
-        # assert isinstance(self.strategy,addStrategy)
-        # add_operation=self.strategy.add(self.start_time,self.end_time,calendar)
-        # if  add_operation !=None :
-        #     self.start_time,self.end_time=add_operation[0],add_operation[1]
-        #     calendar.events.append(self)
     def __str__(self):
-        return f'Event(title={self.title},start_time={self.start_time},end_time={self.end_time},created_at={self.created_at},self.updated_at={self.updated_at})'
+        return f'Event(title={self.title},start_time={self.start_time},end_time={self.end_time},created_at={self.created_at},self.updated_at=${self.updated_at})'
 
 
 
