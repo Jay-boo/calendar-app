@@ -1,5 +1,13 @@
-from typing import List
+from typing import List,Union
 from pydantic import BaseModel
+
+
+class TokenData(BaseModel):
+    username: Union[str, None] = None
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str
 
 class User_table_create(BaseModel):
     # user_id: int
@@ -16,15 +24,37 @@ class User_table(BaseModel):
         orm_mode = True
 
 
+class User_calendar_create(BaseModel):
+    user_id: int
+    name: str
+    #calendar_id: int
+    class Config:
+        orm_mode = True
+
+
 class User_calendar(BaseModel):
     user_id: int
-    # calendar_id: int
+    calendar_id: int
+    name: str
+    class Config:
+        orm_mode = True
+
+
+class Calendar_create(BaseModel):
+    calendar_id: int
+    # event_id: int
+    created_at: str
+    start_date: str
+    end_date: str
+    description: str
+    type: str
+    property: str
     class Config:
         orm_mode = True
 
 class Calendar(BaseModel):
     calendar_id: int
-    # event_id: int
+    event_id: int
     created_at: str
     start_date: str
     end_date: str
