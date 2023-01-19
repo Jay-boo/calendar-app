@@ -6,12 +6,13 @@ from passlib.hash import bcrypt
 
 class User_calendar(Model):
     calendar_id=fields.IntField(pk=True)
-    user_id=fields.ForeignKeyField('models.User_account')
+    user=fields.ForeignKeyField('models.User_account')
 
 
 class CalendarModel(Model):
     event_id=fields.IntField(pk=True)
-    calendar_id=fields.ForeignKeyField('models.User_calendar')
+    calendar=fields.ForeignKeyField('models.User_calendar')
+    title=fields.CharField(60)
     created_at=fields.DatetimeField(auto_now=True)
     start_date=fields.DatetimeField()
     end_date=fields.DatetimeField()
