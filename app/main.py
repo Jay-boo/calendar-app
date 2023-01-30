@@ -12,7 +12,6 @@ import os
 
 load_dotenv()
 
-
 # Load the calendar
 # calendar=load_calendar(db,0)
 calendar=Calendar(
@@ -23,6 +22,8 @@ POSTGRES_DB=os.getenv("POSTGRES_DB")
 POSTGRES_USER=os.getenv("POSTGRES_USER")
 POSTGRES_PASSWORD=os.getenv("POSTGRES_PASSWORD")
 POSTGRES_PORT=os.getenv("POSTGRES_PORT")
+
+
 
 
 register_tortoise(
