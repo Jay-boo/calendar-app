@@ -57,7 +57,7 @@ async def generate_token(form_data: OAuth2PasswordRequestForm=Depends()):
         return {'access_token':token,'token_type':'bearer'}
 
 
-@router.post('/users',response_model=User_Pydantic)
+@router.post('/user',response_model=User_Pydantic)
 async def create_user(user:UserIn_Pydantic):
         user_obj=User_account(username=user.username,password_hash=bcrypt.hash(user.password_hash))
         await user_obj.save()

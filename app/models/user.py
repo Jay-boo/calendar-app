@@ -4,7 +4,7 @@ from tortoise import fields
 from passlib.hash import bcrypt
 
 class User_account(Model):
-    id = fields.IntField(pk=True)
+    user_id = fields.IntField(pk=True)
     username = fields.CharField(50, unique=True)
     password_hash = fields.CharField(128)
 

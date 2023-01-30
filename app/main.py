@@ -10,15 +10,20 @@ from tortoise.contrib.fastapi import register_tortoise
 from tortoise.contrib.pydantic import pydantic_model_creator
 
 load_dotenv()
-db=Database()
 
 # Load the calendar
 # calendar=load_calendar(db,0)
 app = FastAPI()
 
+username="postgres"
+#os.getenv("POSTGRES_USER")
+password="azerty"
+#os.getenv("POSTGRES_PASSWORD")
+
+
 register_tortoise(
     app, 
-    db_url=f"postgres://postgres:a@127.0.0.1:5432/calendarapp",
+    db_url=f"postgres://"+username+":"+password+"@localhost:5432/calendar_app",
     modules={'models': ['models.user','models.calendarModel']},
     generate_schemas=True,
     add_exception_handlers=True
