@@ -2,7 +2,7 @@
 
 
 -- Create the database
-CREATE DATABASE calendar_app;
+-- CREATE DATABASE calendarapp;
 --
 -- -- Connect to the database
 -- \c calendar_app;

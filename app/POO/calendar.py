@@ -1,7 +1,6 @@
 from calendar import calendar
 from datetime import datetime
 from typing import List
-from POO.database import Database
 from POO.event import Event
 from POO.addStrategy import addStrategy
 
