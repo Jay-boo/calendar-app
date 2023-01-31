@@ -1,4 +1,3 @@
-import './App.css';
 import { Calendar, dateFnsLocalizer } from "react-big-calendar";
 import getDay from 'date-fns/getDay';
 import parse from 'date-fns/parse';
@@ -40,8 +39,7 @@ const events = [
   }
 ]
 
-function App() {
-
+function Calendar_bis() {
   const [newEvent, setNewEvent] = useState({ title: "", start: "", end: "" })
   const [allEvents, setAllEvents] = useState(events)
   const url_api = "http://localhost:8000/hello"
@@ -97,4 +95,5 @@ function App() {
   );
 }
 
-export default App;
+
+export default Calendar_bis;
