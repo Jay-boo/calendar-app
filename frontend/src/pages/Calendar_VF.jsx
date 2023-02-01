@@ -1,13 +1,12 @@
 import { Calendar, dateFnsLocalizer } from "react-big-calendar";
+import React, { useEffect, useState } from 'react';
 import getDay from 'date-fns/getDay';
 import parse from 'date-fns/parse';
 import startOfWeek from "date-fns/startOfWeek"
 import format from "date-fns/format";
-import React, { useState } from "react";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-
 
 const locales = {
   "en-US": require("date-fns/locale/en-US")
@@ -39,20 +38,16 @@ const events = [
   }
 ]
 
-function Calendar_bis() {
+export const Calendar_VF = () => {
+
   const [newEvent, setNewEvent] = useState({ title: "", start: "", end: "" })
   const [allEvents, setAllEvents] = useState(events)
-  const url_api = "http://localhost:8000/hello"
-  console.log("hello")
 
 
 
   function handleAddEvent() {
   }
 
-  fetch(url_api, { method: "GET" })
-    .then(response => response.json())
-    .then(response => console.log(response))
 
 
 
@@ -94,6 +89,3 @@ function Calendar_bis() {
     </div>
   );
 }
-
-
-export default Calendar_bis;
