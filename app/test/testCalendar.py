@@ -6,19 +6,19 @@ from POO.eventLeasure import EventLeasure
 from POO.calendar import Calendar
 import pytz
 
-now=datetime.now()
+now=datetime.now().replace(tzinfo=pytz.utc)
 
-event_1_interval=[now+timedelta(hours=3),now+timedelta(hours=6)].apply(lambda x :x.replace(tzinfo=pytz.utc))
+event_1_interval=[now+timedelta(hours=3),now+timedelta(hours=6)]
 add_configs={
-        'noConflictBefore':[now+timedelta(hours=1),now+timedelta(hours=3)].apply(lambda x :x.replace(tzinfo=pytz.utc)),
-        'noConflictBeforeBis':[now+timedelta(hours=1),now+timedelta(hours=2)].apply(lambda x :x.replace(tzinfo=pytz.utc)),
-        'noConflictAfter':[now+timedelta(hours=6),now+timedelta(hours=7)].apply(lambda x :x.replace(tzinfo=pytz.utc)),
-        'noConflictAfterBis':[now+timedelta(hours=7),now+timedelta(hours=8)].apply(lambda x :x.replace(tzinfo=pytz.utc)),
-        'event1StartBeforeEndIn':[now+timedelta(hours=5),now+timedelta(hours=7)].apply(lambda x :x.replace(tzinfo=pytz.utc)),
-        'event1StartInEndAfter':[now+timedelta(hours=2),now+timedelta(hours=5)].apply(lambda x :x.replace(tzinfo=pytz.utc)),
-        'event1StartInEndIn':[now+timedelta(hours=2),now+timedelta(hours=7)].apply(lambda x :x.replace(tzinfo=pytz.utc)),
-        'event1StartBeforeEndAfter':[now+timedelta(hours=4),now+timedelta(hours=5)].apply(lambda x :x.replace(tzinfo=pytz.utc)),
-        'event1Isevent2':[now+timedelta(hours=3),now+timedelta(hours=6)].apply(lambda x :x.replace(tzinfo=pytz.utc))
+        'noConflictBefore':[now+timedelta(hours=1),now+timedelta(hours=3)],
+        'noConflictBeforeBis':[now+timedelta(hours=1),now+timedelta(hours=2)],
+        'noConflictAfter':[now+timedelta(hours=6),now+timedelta(hours=7)],
+        'noConflictAfterBis':[now+timedelta(hours=7),now+timedelta(hours=8)],
+        'event1StartBeforeEndIn':[now+timedelta(hours=5),now+timedelta(hours=7)],
+        'event1StartInEndAfter':[now+timedelta(hours=2),now+timedelta(hours=5)],
+        'event1StartInEndIn':[now+timedelta(hours=2),now+timedelta(hours=7)],
+        'event1StartBeforeEndAfter':[now+timedelta(hours=4),now+timedelta(hours=5)],
+        'event1Isevent2':[now+timedelta(hours=3),now+timedelta(hours=6)]
 
 }
 
