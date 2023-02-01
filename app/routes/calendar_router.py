@@ -40,7 +40,7 @@ async def  get_all_calendar(user:User_Pydantic=Depends(get_current_user)):
 
 @router.get("/calendar/{calendar_id}") # Devra retourner un calendar model
 async def get_calendar(calendar_id:int,user:User_Pydantic=Depends(get_current_user)):
-    calendar=await User_calendar.filter(user_id=user.id  , id_calendar=calendar_id)
+    calendar=await User_calendar.filter(user_id=user.id_user  , id_calendar=calendar_id)
 
     if not calendar:
         return {"error":f"{user.username} doesn't have {calendar_id} calendar"}
@@ -64,11 +64,11 @@ Event_Pydantic=pydantic_model_creator(CalendarModel,name='EventIn',exclude_reado
 async def add_event_to_calendar(calendar_id:int,event:Event_Pydantic,user:User_Pydantic=Depends(get_current_user)):
     user = await User_account.get(id_user=user.id_user)
     try:
-        user_calendar = await User_calendar.get(id_calendar=calendar_id)
-        if user.id_user != user_calendar.user_id:
-            return {"error": "User don't have access to this calendar"}
-    except User_calendar.DoesNotExist:
-        return {"error": "Calendar not found"}
+        user_calendar = await User_calendar.get(id_calendar=calendar_id,user_id=user.id_user)
+    except:
+        user_calendar = None
+    if not user_calendar:
+        return {"error":f"{user.username} doesn't have {calendar_id} calendar"}
 
     events = await CalendarModel.filter(calendar_id=calendar_id)
 
