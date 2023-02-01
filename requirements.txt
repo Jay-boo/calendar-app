@@ -5,3 +5,4 @@ pytest
 python-dotenv
 tortoise-orm
 pyjwt
+passlib

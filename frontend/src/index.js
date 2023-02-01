@@ -3,12 +3,6 @@ import ReactDOM from 'react-dom';
 import App from "./App";
 
 
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Layout from "./pages/Layout";
-import Home from "./pages/Home";
-// import Calendar_bis from './pages/Calendar';
-
-
 // export default function App() {
 //   return (
 //     <BrowserRouter>

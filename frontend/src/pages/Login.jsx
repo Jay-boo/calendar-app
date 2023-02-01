@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import DashboardHeader from "../components/DashboardHeader";
 import { Link, useNavigate } from "react-router-dom";
 import FastAPIClient from '../client';
 import config from '../config';
 import Button from '../components/Button/Button';
 import FormInput from '../components/FormInput/FormInput';
+import jwtDecode from "jwt-decode";
 
 const client = new FastAPIClient(config);
 
@@ -45,6 +46,16 @@ const Login = () => {
     setIsLoggedIn(true);
 
   }
+  useEffect(() => {
+    const tokenString = localStorage.getItem("token");
+    if (tokenString) {
+      const token = JSON.parse(tokenString);
+      const decodedAccessToken = jwtDecode(token.access_token);
+      if (JSON.stringify(token) !== JSON.stringify({ error: "invalid credentials" })) {
+        setIsLoggedIn(true);
+      }
+    }
+  }, []);
 
 
 
@@ -52,11 +63,11 @@ const Login = () => {
   const handleLogout = () => {
     client.logout();
     setIsLoggedIn(false)
-    navigate('/')
+    navigate('/login')
   }
 
   const handleLogin = () => {
-    navigate("/");
+    navigate("/login");
   }
 
   let displayButton;
@@ -72,9 +83,9 @@ const Login = () => {
   return (
     <>
       <section className="bg-black ">
-        <Link to="/home"
+        <Link to="/"
           className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mx-4">
-          Home
+          HOME
         </Link>
         {displayButton}
 
