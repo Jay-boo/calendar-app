@@ -6,12 +6,16 @@
     "@chakra-ui/react": "^2.0.2",
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
+    "@mars/heroku-js-runtime-env": "^3.0.2",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "axios": "^1.3.0",
     "date-fns": "^2.29.3",
     "emotion-theming": "^11.0.0",
+    "env-cmd": "^10.1.0",
     "http-proxy-middleware": "^2.0.6",
+    "jwt-decode": "^3.1.2",
     "react": "^18.2.0",
     "react-big-calendar": "^1.5.2",
     "react-datepicker": "^4.10.0",
@@ -43,5 +47,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.2.4"
   }
 }
