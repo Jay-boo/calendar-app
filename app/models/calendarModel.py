@@ -6,7 +6,7 @@ from passlib.hash import bcrypt
 
 class User_calendar(Model):
     id_calendar=fields.IntField(pk=True)
-    user_id=fields.ForeignKeyField('models.User_account')
+    user=fields.ForeignKeyField('models.User_account')
 
 
 class CalendarModel(Model):
@@ -25,7 +25,7 @@ class CalendarModel(Model):
 
 class ReminderModel(Model):
     id_reminder=fields.IntField(pk=True)
-    event_id=fields.ForeignKeyField('models.CalendarModel')
+    event=fields.ForeignKeyField('models.CalendarModel')
     reminder_timedelta=fields.TimeDeltaField()
 
 

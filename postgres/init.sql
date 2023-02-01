@@ -41,7 +41,7 @@ CREATE TABLE User_calendar (
 );
 
 -- Create the Calendar table
-CREATE TABLE Calendar (
+CREATE TABLE CalendarModel (
     calendar_id INTEGER REFERENCES User_calendar(id_calendar) ,
     id_event SERIAL PRIMARY KEY ,
     title VARCHAR(255),
@@ -56,7 +56,7 @@ CREATE TABLE Calendar (
 -- Create the reminder table
 CREATE TABLE Reminder (
     id_reminder SERIAL PRIMARY KEY,
-    event_id INTEGER REFERENCES Calendar(id_event),
+    event_id INTEGER REFERENCES CalendarModel(id_event),
     reminder_date TIMESTAMP
 );
 
@@ -65,7 +65,7 @@ ALTER SEQUENCE user_id_seq
 OWNED BY User_account.id_user;
 
 ALTER SEQUENCE event_id_seq
-OWNED BY Calendar.id_event;
+OWNED BY CalendarModel.id_event;
 
 ALTER SEQUENCE calendar_id_seq
 OWNED BY User_calendar.id_calendar;
