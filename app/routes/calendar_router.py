@@ -16,17 +16,17 @@ router=APIRouter()
 Calendar_Pydantic=pydantic_model_creator(User_calendar,name="UserToCalendar")
 
 
-@router.post("/create_calendar")
+@router.post("/calendar")
 async def create_calendar(user:User_Pydantic=Depends(get_current_user)):
     print(user.id)
-    user_calendar_obj=await User_calendar.create(user_id=user.id)
+    user_calendar_obj=await User_calendar.create(id_user=user.id)
     return {"message",f"calendar create for {user.username}"}
 
 
 
 
 
-@router.get("/get_calendars")
+@router.get("/calendar")
 async def  get_all_calendar(user:User_Pydantic=Depends(get_current_user)):
     calendars=await User_calendar.filter(user_id=user.id)
     if not calendars:
@@ -36,7 +36,7 @@ async def  get_all_calendar(user:User_Pydantic=Depends(get_current_user)):
 
 @router.get("/calendar/{calendar_id}") # Devra retourner un calendar model
 async def get_calendar(calendar_id:int,user:User_Pydantic=Depends(get_current_user)):
-    calendar=await User_calendar.filter(user_id=user.id  , calendar_id=calendar_id)
+    calendar=await User_calendar.filter(user_id=user.id  , id_calendar=calendar_id)
 
     if not calendar:
         return {"error":f"{user.username} doesn't have {calendar_id} calendar"}
@@ -47,6 +47,11 @@ async def get_calendar(calendar_id:int,user:User_Pydantic=Depends(get_current_us
         return {}
     else:
         return events
+
+
+
+
+
 
 
 Event_Pydantic=pydantic_model_creator(CalendarModel,name='EventIn',exclude_readonly=True)

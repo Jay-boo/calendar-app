@@ -5,12 +5,12 @@ from passlib.hash import bcrypt
 
 
 class User_calendar(Model):
-    calendar_id=fields.IntField(pk=True)
+    id_calendar=fields.IntField(pk=True)
     user_id=fields.ForeignKeyField('models.User_account')
 
 
 class CalendarModel(Model):
-    event_id=fields.IntField(pk=True)
+    id_event=fields.IntField(pk=True)
     calendar=fields.ForeignKeyField('models.User_calendar')
     title=fields.CharField(60)
     created_at=fields.DatetimeField(auto_now=True)
@@ -24,7 +24,7 @@ class CalendarModel(Model):
 
 
 class ReminderModel(Model):
-    reminder_id=fields.IntField(pk=True)
+    id_reminder=fields.IntField(pk=True)
     event_id=fields.ForeignKeyField('models.CalendarModel')
     reminder_timedelta=fields.TimeDeltaField()
 

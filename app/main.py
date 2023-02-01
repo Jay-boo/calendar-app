@@ -19,11 +19,15 @@ username="postgres"
 #os.getenv("POSTGRES_USER")
 password="azerty"
 #os.getenv("POSTGRES_PASSWORD")
-
-
+port="5432"
+#os.getenv("POSTGRES_PORT")
+host='localhost'
+#os.getenv("POSTGRES_HOST")
+base_name="calendar_app"
+#os.getenv("POSTGRES_BASE")
 register_tortoise(
     app, 
-    db_url=f"postgres://"+username+":"+password+"@localhost:5432/calendar_app",
+    db_url=f"postgres://"+username+":"+password+"@"+host+":"+port+"/"+base_name,
     modules={'models': ['models.user','models.calendarModel']},
     generate_schemas=True,
     add_exception_handlers=True

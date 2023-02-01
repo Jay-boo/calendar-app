@@ -36,7 +36,7 @@ async def authenticate_user(username:str,password:str):
 async def get_current_user(token:str=Depends(oauth2_scheme)):
         try: 
                 payload=jwt.decode(token,JWT_SECRET,algorithms=['HS256'])
-                user=await User_account.get(user_id=payload.get('user_id'))
+                user=await User_account.get(id_user=payload.get('id_user'))
         except:
                 raise HTTPException(
                                 status_code=status.HTTP_401_UNAUTHORIZED,
@@ -70,6 +70,6 @@ async def get_user(user: User_Pydantic=Depends(get_current_user)):
 #Change password
 @router.put("/user")
 async def update_user(password:str,user: User_Pydantic=Depends(get_current_user)):
-        id=user.user_id
-        await User_account.filter(user_id=id).update(password_hash=bcrypt.hash(password))
-        return await User_Pydantic.from_queryset_single(User_account.get(user_id=id))
+        id=user.id
+        await User_account.filter(id_user=id).update(password_hash=bcrypt.hash(password))
+        return await User_Pydantic.from_queryset_single(User_account.get(id_user=id))

@@ -31,7 +31,7 @@ CREATE SEQUENCE reminder_id_seq;
 CREATE TABLE User_account (
     id_user SERIAL PRIMARY KEY,
     username VARCHAR(255),
-    password_hasg VARCHAR(255)
+    password_hash VARCHAR(255)
 );
 
 -- Create the User_calendar table
