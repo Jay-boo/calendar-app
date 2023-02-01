@@ -96,7 +96,7 @@ async def add_event_to_calendar(calendar_id:int,event:Event_Pydantic,user:User_P
     calendar_obj.events=events_obj
     calendar_obj.add_event(event)
 
-    deleted_job = await CalendarModel.filter(calendar_id=user_calendar.user_id).delete()
+    deleted_job = await CalendarModel.filter(calendar_id=calendar_id).delete()
     tasks = [CalendarModel.create(calendar_id=calendar_id,
                                    title=evn.title,
                                    created_at=evn.created_at.strftime("%Y-%m-%dT%H:%M:%S.%fZ"),

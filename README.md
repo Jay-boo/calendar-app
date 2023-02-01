@@ -1,19 +1,9 @@
-# RDD
+# :rocket: psql dockerization
 
-Table user <-> calendrier:
-user | id_calendrier 
-
-Table calendrier <-> events:
-id_calendrier | id_event
-
-Table event <-> information Events:
-id_event | title | description | type | t_start| t_end | created_at | updated_at | propriety
-
-
-
-Table event <-> Reminder :
-id_event | reminder_time_delta
-
-
-
+```
+docker volume create db-volume 
+docker build  -t db-calendar-app .
+docker run -it -d --name db-calendar-app -v db-volume:/var/lib/postgresql/data postgres
+docker exec -it db-calendar-app -U postgres
+```
 
