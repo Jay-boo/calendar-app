@@ -73,3 +73,8 @@ async def update_user(password:str,user: User_Pydantic=Depends(get_current_user)
         id=user.id_user
         await User_account.filter(id_user=id).update(password_hash=bcrypt.hash(password))
         return await User_Pydantic.from_queryset_single(User_account.get(id_user=id))
+
+#delete user
+@router.delete("/user")
+async def delete_user(password:str,user: User_Pydantic=Depends(get_current_user)):
+        await User_account.filter(id_user=id).delete()

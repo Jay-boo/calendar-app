@@ -21,7 +21,7 @@ utc=pytz.UTC
 router=APIRouter()
 Calendar_Pydantic=pydantic_model_creator(User_calendar,name="UserToCalendar")
 
-
+#Create one calendar
 @router.post("/calendar",response_model = Calendar_Pydantic)
 async def create_calendar(user:User_Pydantic=Depends(get_current_user)):
     user = await User_account.get(id_user=user.id_user)
@@ -29,7 +29,7 @@ async def create_calendar(user:User_Pydantic=Depends(get_current_user)):
     user_calendar_obj=await User_calendar.create(user=user)
     return user_calendar_obj
 
-
+# Get all calendar
 @router.get("/calendar")
 async def  get_all_calendar(user:User_Pydantic=Depends(get_current_user)):
     calendars=await User_calendar.filter(user=user.id_user)
@@ -37,7 +37,7 @@ async def  get_all_calendar(user:User_Pydantic=Depends(get_current_user)):
         raise HTTPException(status_code=404, detail=f"{user.username} doesn't have calendars")
     return calendars
 
-
+# Get calendar by id
 @router.get("/calendar/{calendar_id}") # Devra retourner un calendar model
 async def get_calendar(calendar_id:int,user:User_Pydantic=Depends(get_current_user)):
     calendar=await User_calendar.filter(user_id=user.id_user  , id_calendar=calendar_id)
@@ -51,6 +51,17 @@ async def get_calendar(calendar_id:int,user:User_Pydantic=Depends(get_current_us
         return {}
     else:
         return events
+
+# Delete calendar by id
+@router.delete("/calendar/{calendar_id}") # Devra retourner un calendar model
+async def delete_calendar(calendar_id:int,user:User_Pydantic=Depends(get_current_user)):
+    calendar=await User_calendar.filter(user_id=user.id_user  , id_calendar=calendar_id)
+
+    if not calendar:
+        raise HTTPException(status_code=404, detail=f"{user.username} doesn't have {calendar_id} calendar")
+    events=await CalendarModel.filter(calendar_id=calendar_id).delete()
+
+   
 
 
 
@@ -113,7 +124,23 @@ async def add_event_to_calendar(calendar_id:int,event:Event_Pydantic,user:User_P
     return events
     
 
+# Delete event by id
+@router.delete("/calendar/{calendar_id}/event/{event_id}") # Devra retourner un calendar model
+async def delete_event(calendar_id:int,event_id:int,user:User_Pydantic=Depends(get_current_user)):
+    calendar=await User_calendar.filter(user_id=user.id_user  , id_calendar=calendar_id)
 
+    if not calendar:
+        raise HTTPException(status_code=404, detail=f"{user.username} doesn't have {calendar_id} calendar")
+    events=await CalendarModel.filter(calendar_id=calendar_id,id_event=event_id)
+    if not events:
+        raise HTTPException(status_code=404, detail=f"{calendar_id} doesn't have {event_id} event")
+
+    deleted_job = await CalendarModel.filter(calendar_id=calendar_id,id_event=event_id).delete()
+
+    events = await CalendarModel.filter(calendar_id=calendar_id)
+    return events
+
+    
 
 
 
