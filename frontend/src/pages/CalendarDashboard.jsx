@@ -13,20 +13,48 @@ const client = new FastAPIClient(config);
 
 
 const CalendarView = ({ calendar_id }) => {
+  console.log("in calendarView");
   console.log(calendar_id)
+  const [events, setEvents] = useState([]);
+
+
+  const fetchEvents = () => {
+    client.getEventsCalendar(calendar_id).then((data) => {
+      const events_new = [];
+      console.log(new Date());
+      for (var i = 0; i < data.length; i++) {
+        console.log("for");
+        var start_date = new Date(data[i].start_date);
+        var end_date = new Date(data[i].end_date);
+        start_date.setTime(start_date.getTime() - 60 * 60 * 1000)
+        end_date.setTime(end_date.getTime() - 60 * 60 * 1000)
+        events_new.push({
+          title: data[i].title,
+          start: start_date,
+          end: end_date
+        });
+      };
+      setEvents(events_new);
+
+    })
+  }
+
+
   return (
     <div>
-
-      <h1> {calendar_id}</h1>
-      <Calendar_VF />
+      <button onClick={fetchEvents}>See calendar {calendar_id}</button>
+      <Calendar_VF eventsCal={events} calendar_id={calendar_id} fetchEvents={fetchEvents} />
     </div>
   )
-}
+};
+
 
 const GlobalCalendarView = ({ calendars }) => {
   const [calendarView, setCalendarView] = useState();
-  if (JSON.stringify(calendars) != JSON.stringify({ error: "no calendar" })) {
-    // setCalendarView(1);
+  const haveCalendar = JSON.stringify(calendars) != JSON.stringify({ error: "no calendar" });
+
+
+  if (haveCalendar) {
     const list_calendars = calendars.map((calendar) => <option value={calendar.calendar_id}> {calendar.calendar_id}</option >);
     console.log(list_calendars);
 
@@ -44,6 +72,9 @@ const GlobalCalendarView = ({ calendars }) => {
         <CalendarView calendar_id={calendarView} />
       </div>
     );
+
+
+
   } else {
     return (
       <div>
@@ -55,6 +86,20 @@ const GlobalCalendarView = ({ calendars }) => {
 
 
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 const CalendarDashboard = () => {

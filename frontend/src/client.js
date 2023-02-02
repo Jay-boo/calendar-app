@@ -32,6 +32,7 @@ class FastAPIClient {
     for (const key in item) {
       form_data.append(key, item[key]);
     }
+    console.log(form_data);
 
     console.log("---------------- END LOGIN => fetch ------------")
     return this.apiClient
@@ -41,6 +42,37 @@ class FastAPIClient {
         return this.fetchUser();
       });
   }
+
+
+
+
+  addEvent(calendar_id, newEvent) {
+    const title = newEvent.title;
+    const description = "desc";
+    const property = "property";
+    const type = "leasure";
+    console.log("______IN client.addEevent__________");
+    console.log(newEvent.start);
+    console.log(newEvent.end);
+    console.log(newEvent.start.toISOString());
+    const start_date = newEvent.start.toISOString();
+    const end_date = newEvent.end.toISOString();
+    const form_data_bis = {
+      title: title,
+      description: description,
+      start_date: start_date,
+      end_date: end_date,
+      property: property,
+      type: type
+    }
+    console.log(form_data_bis);
+    return this.apiClient.post(`/calendar/${calendar_id}/add_event`, form_data_bis)
+      .then((resp) => { return resp.data });
+
+  }
+
+
+
 
   fetchUser() {
 
@@ -54,6 +86,12 @@ class FastAPIClient {
 
   getCalendar() {
     return this.apiClient.get('/get_calendars').then(({ data }) => {
+      return data;
+    });
+  }
+
+  getEventsCalendar(id) {
+    return this.apiClient.get(`/calendar/${id}`).then(({ data }) => {
       return data;
     });
   }

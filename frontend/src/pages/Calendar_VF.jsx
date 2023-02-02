@@ -1,4 +1,6 @@
 import { Calendar, dateFnsLocalizer } from "react-big-calendar";
+import config from "../config";
+import FastAPIClient from '../client';
 import React, { useEffect, useState } from 'react';
 import getDay from 'date-fns/getDay';
 import parse from 'date-fns/parse';
@@ -12,6 +14,8 @@ const locales = {
   "en-US": require("date-fns/locale/en-US")
 }
 
+const client = new FastAPIClient(config);
+
 const localizer = dateFnsLocalizer(
   {
     format,
@@ -23,29 +27,33 @@ const localizer = dateFnsLocalizer(
 )
 
 
-const events = [
-  {
-    title: "Big meeting",
-    allDay: true,
-    start: new Date(2023, 0, 1),
-    end: new Date(2023, 0, 2)
-  },
-  {
-    title: "Big ",
-    allDay: true,
-    start: new Date(2023, 0, 7),
-    end: new Date(2023, 0, 10)
+
+export const Calendar_VF = ({ eventsCal, calendar_id }) => {
+  const [newEvent, setNewEvent] = useState({ title: "", start: "", end: "" });
+  const [events, setEvent] = useState([]);
+  console.log("in calendar_VF");
+  console.log(eventsCal);
+  console.log(calendar_id);
+
+
+
+
+
+  function ViewEvents() {
+    console.log("handle add");
+    setEvent(eventsCal);
+
   }
-]
-
-export const Calendar_VF = () => {
-
-  const [newEvent, setNewEvent] = useState({ title: "", start: "", end: "" })
-  const [allEvents, setAllEvents] = useState(events)
-
-
-
   function handleAddEvent() {
+    console.log("in add elements")
+    console.log(newEvent);
+    const effective_times = client.addEvent(calendar_id, newEvent);
+    console.log("effffective ");
+    console.log(effective_times);
+    setNewEvent({ ...newEvent, start: effective_times.start_time });
+    setNewEvent({ ...newEvent, end: effective_times.end_time });
+    console.log(newEvent);
+    setEvent([...events, newEvent]);
   }
 
 
@@ -55,22 +63,31 @@ export const Calendar_VF = () => {
 
 
   return (
-    <div className="App">
-      <h1> Calendar </h1>
+    <div >
+      <h1> Calendar{calendar_id} </h1>
+      <div>
+        <button onClick={ViewEvents}>  INITIALIZE CALENDAR VIEW</button>
+      </div>
       <h2> Add new event</h2>
+
 
       <div>
         <input type="text" placeholder='Add title event'
           style={{ width: "20%", marginRight: "10px" }}
           value={newEvent.title} onChange={(e) => setNewEvent({ ...newEvent, title: e.target.value })} />
         <DatePicker placeholderText='Start Date' style={{ marginRight: "10px" }}
-          selected={newEvent.start} onChange={(start) => setNewEvent(...newEvent, start)} />
+          selected={newEvent.start} showTimeSelect
+          timeFormat="HH:mm"
+          timeIntervals={15} onChange={(start) => setNewEvent({ ...newEvent, start })} />
         <DatePicker placeholderText='End Date' style={{ marginRight: "10px" }}
-          selected={newEvent.end} onChange={(end) => setNewEvent(...newEvent, end)}
+          selected={newEvent.end} showTimeSelect
+          timeFormat="HH:mm"
+          timeIntervals={15}
+          onChange={end => setNewEvent({ ...newEvent, end })}
         />
 
         <button style={{ marginTop: "10px" }} onClick={handleAddEvent}>
-          Add Event
+          Add event
 
         </button>
 
