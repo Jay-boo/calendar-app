@@ -2,7 +2,7 @@
 import asyncio
 from calendar import calendar
 from datetime import datetime
-from fastapi import APIRouter,Request, Depends
+from fastapi import APIRouter,Request, Depends,HTTPException
 from POO.event import Event
 from POO.calendar import Calendar
 from POO.eventLeasure import EventLeasure
@@ -10,7 +10,7 @@ from tortoise.contrib.pydantic.creator import pydantic_model_creator
 from models.user import User_account
 from models.calendarModel import CalendarModel, User_calendar
 from routes.auth import User_Pydantic, get_current_user 
-
+from POO.function import transfrom_with_strat
 
 import pytz
 
@@ -34,7 +34,7 @@ async def create_calendar(user:User_Pydantic=Depends(get_current_user)):
 async def  get_all_calendar(user:User_Pydantic=Depends(get_current_user)):
     calendars=await User_calendar.filter(user=user.id_user)
     if not calendars:
-        return {"error":"no calendar"}
+        raise HTTPException(status_code=404, detail=f"{user.username} doesn't have calendars")
     return calendars
 
 
@@ -43,7 +43,7 @@ async def get_calendar(calendar_id:int,user:User_Pydantic=Depends(get_current_us
     calendar=await User_calendar.filter(user_id=user.id_user  , id_calendar=calendar_id)
 
     if not calendar:
-        return {"error":f"{user.username} doesn't have {calendar_id} calendar"}
+        raise HTTPException(status_code=404, detail=f"{user.username} doesn't have {calendar_id} calendar")
     
     #else : We 're gonna look for events
     events=await CalendarModel.filter(calendar_id=calendar_id)
@@ -68,30 +68,30 @@ async def add_event_to_calendar(calendar_id:int,event:Event_Pydantic,user:User_P
     except:
         user_calendar = None
     if not user_calendar:
-        return {"error":f"{user.username} doesn't have {calendar_id} calendar"}
+        raise HTTPException(status_code=404, detail=f"{user.username} doesn't have {calendar_id} calendar")
 
     events = await CalendarModel.filter(calendar_id=calendar_id)
 
     calendar_obj = Calendar()
 
-    event=EventLeasure(
+    event=transfrom_with_strat(Event(
             title=event.title,
             desc=event.description,
             start_time=event.start_date,
             end_time=event.end_date,
-            activity=event.property
-            )
+            ),event.type,event.property)
+    if not event:
+        raise HTTPException(status_code=404, detail="Type not valid")
     
             
     events_obj =[]
     for evn in events : 
-        events_obj.append(EventLeasure(
+        events_obj.append(transfrom_with_strat(Event(
                     title=evn.title,
                     desc=evn.description,
                     start_time=evn.start_date,
-                    end_time=evn.end_date,
-                    activity=evn.property
-                    ))
+                    end_time=evn.end_date
+                    ),event.type,event.property))
                 
     calendar_obj.events=events_obj
     calendar_obj.add_event(event)

@@ -5,6 +5,7 @@ from POO.addStrategy import addStrategy
 from POO.reminder import Reminder
 
 
+
 class Event(ABC):
 
     def __init__(self,title:str,desc:str,start_time:datetime,end_time:datetime) -> None:
@@ -37,6 +38,8 @@ class Event(ABC):
             if t_start < self.end_time:
                 return True 
         return False
+
+
 
     def setStrategy(self,strategy):
         self.strategy=strategy
