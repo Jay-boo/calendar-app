@@ -7,7 +7,7 @@ from fastapi import FastAPI,  HTTPException, status
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from tortoise.contrib.fastapi import register_tortoise
 from tortoise.contrib.pydantic import pydantic_model_creator
-
+import os
 load_dotenv()
 
 # Load the calendar
@@ -18,10 +18,8 @@ username="postgres"
 #os.getenv("POSTGRES_USER")
 password="azerty"
 #os.getenv("POSTGRES_PASSWORD")
-port="5432"
-#os.getenv("POSTGRES_PORT")
-host='localhost'
-#os.getenv("POSTGRES_HOST")
+port=os.getenv("POSTGRES_PORT")
+host=os.getenv("POSTGRES_HOST")
 base_name="calendar_app"
 #os.getenv("POSTGRES_BASE")
 register_tortoise(
