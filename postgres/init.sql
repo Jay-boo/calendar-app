@@ -56,7 +56,7 @@
 --     event_id INTEGER REFERENCES Calendar(event_id),
 --     reminder_date TIMESTAMP
 -- );
-=======
+
 CREATE DATABASE calendar_app;
 
 -- Connect to the database
@@ -100,16 +100,16 @@ CREATE TABLE CalendarModel (
     calendar_id INTEGER REFERENCES User_calendar(id_calendar) ,
     id_event SERIAL PRIMARY KEY ,
     title VARCHAR(255),
-    created_at DATE,
-    start_date DATE,
-    end_date DATE,
+    created_at TIMESTAMPTZ,
+    start_date TIMESTAMPTZ,
+    end_date TIMESTAMPTZ,
     description VARCHAR(255),
     type VARCHAR(255),
     property VARCHAR(255)
 );
 
 -- Create the reminder table
-CREATE TABLE Reminder (
+CREATE TABLE ReminderModel (
     id_reminder SERIAL PRIMARY KEY,
     event_id INTEGER REFERENCES CalendarModel(id_event),
     reminder_date TIMESTAMP
@@ -126,4 +126,4 @@ ALTER SEQUENCE calendar_id_seq
 OWNED BY User_calendar.id_calendar;
 
 ALTER SEQUENCE reminder_id_seq
-OWNED BY Reminder.id_reminder;
+OWNED BY ReminderModel.id_reminder;
