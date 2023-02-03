@@ -1,0 +1,24 @@
+.App {
+  text-align: center;
+}
+h1 {
+}
+
+.rbc-month-view {
+  flex-basis: 500px !important;
+}
+
+.rbc-toolbar-label {
+  font-weight: bold;
+  font-size: 22px;
+  color: rgb(10, 6, 9);
+}
+
+.rbc-date-cell {
+  color: rgb(13, 24, 13);
+}
+
+.rbc-today {
+  background-color: rgb(250, 233, 196) !important;
+}
+

@@ -6,6 +6,7 @@ import { NotLoggedIn } from "./NotLoggedIn";
 import axios from 'axios';
 import jwtDecode from "jwt-decode";
 import { Calendar_VF } from "./Calendar_VF";
+import CalendarComponent from "./CalendarBis";
 
 const client = new FastAPIClient(config);
 
@@ -16,8 +17,6 @@ const CalendarView = ({ calendar_id }) => {
   console.log("in calendarView");
   console.log(calendar_id)
   const [events, setEvents] = useState([]);
-
-
   const fetchEvents = () => {
     client.getEventsCalendar(calendar_id).then((data) => {
       const events_new = [];
@@ -43,7 +42,10 @@ const CalendarView = ({ calendar_id }) => {
   return (
     <div>
       <button onClick={fetchEvents}>See calendar {calendar_id}</button>
-      <Calendar_VF eventsCal={events} calendar_id={calendar_id} fetchEvents={fetchEvents} />
+      {events.length > 0 &&
+        <div>
+          <CalendarComponent events={events} fetchEvents={fetchEvents} /></div>}
+      {/* <Calendar_VF eventsCal={events} calendar_id={calendar_id} fetchEvents={fetchEvents} /> */}
     </div>
   )
 };

@@ -9,6 +9,7 @@ class Calendar:
         self.events=[]
 
     def add_event(self,event:Event):
+        print(type(event.start_time))
         assert event.start_time> datetime.now()
         assert isinstance(event.strategy,addStrategy)
         add_operation=event.strategy.add(event.start_time,event.end_time,self)
@@ -24,6 +25,10 @@ class Calendar:
 
     def remove_event(self,event:Event):
         self.events.remove(event)
+    
+    def load_calendar(self,list_event):
+        
+        self.events=list_event;
 
 
     def __str__(self) -> str:

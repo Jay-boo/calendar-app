@@ -51,10 +51,6 @@ class FastAPIClient {
     const description = "desc";
     const property = "property";
     const type = "leasure";
-    console.log("______IN client.addEevent__________");
-    console.log(newEvent.start);
-    console.log(newEvent.end);
-    console.log(newEvent.start.toISOString());
     const start_date = newEvent.start.toISOString();
     const end_date = newEvent.end.toISOString();
     const form_data_bis = {
@@ -89,6 +85,9 @@ class FastAPIClient {
       return data;
     });
   }
+  removeEvent(event_id) {
+
+  }
 
   getEventsCalendar(id) {
     return this.apiClient.get(`/calendar/${id}`).then(({ data }) => {
@@ -109,6 +108,7 @@ class FastAPIClient {
       });
   }
 
+
   // Logging out is just deleting the jwt.
   logout() {
     // Add here any other data that needs to be deleted from local storage
@@ -116,6 +116,13 @@ class FastAPIClient {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
   }
+
+
+
+
+
+
+
 
   /* ----- Client Configuration ----- */
 
