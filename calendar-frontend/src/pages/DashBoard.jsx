@@ -14,14 +14,20 @@ const DashBoard = () => {
 
   useEffect(() => {
     const tokenString = localStorage.getItem("token");
+    console.log("In Login useEffect items", localStorage);
     if (tokenString) {
+      console.log("Is valid");
       const token = JSON.parse(tokenString);
-      const decodeAccessToken = jwtDecode(token.access_token);
-      if (JSON.stringify(token) !== JSON.stringify({ error: "invalid credentials" })) {
+      const isAccessTokenValid =
+        JSON.stringify(token) != JSON.stringify({ error: "invalid credentials" })
+      console.log("is Access", isAccessTokenValid);
+      if (isAccessTokenValid) {
+        const decodedAccessToken = jwtDecode(token.access_token);
         setIsLoggedIn(true);
-      }
-    }
 
+      }
+
+    }
   }, []);
   if (!isLoggedIn) return <NotLoggedIn />
 

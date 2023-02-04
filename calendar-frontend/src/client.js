@@ -145,6 +145,7 @@ class FastAPIClient {
 
     client.interceptors.request.use(localStorageTokenInterceptor);
     // client.get("").then((resp) => console.log(resp));
+    console.log("exit get api fct")
     return client;
   }
 }
@@ -152,6 +153,7 @@ class FastAPIClient {
 
 // every request is intercepted and has auth header injected.
 function localStorageTokenInterceptor(config) {
+  console.log("localStorageTokenInterceptor");
   const headers = {};
   const tokenString = localStorage.getItem('token');
 
