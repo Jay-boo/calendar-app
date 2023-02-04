@@ -14,14 +14,17 @@ load_dotenv()
 # calendar=load_calendar(db,0)
 app = FastAPI()
 
+# username=os.getenv("POSTGRES_USER")
+# password=os.getenv("POSTGRES_PASSWORD")
+# port=os.getenv("POSTGRES_PORT")
+# host=os.getenv("POSTGRES_HOST")
+# base_name=os.getenv("POSTGRES_BASE")
+
 username="postgres"
-#os.getenv("POSTGRES_USER")
 password="azerty"
-#os.getenv("POSTGRES_PASSWORD")
-port=os.getenv("POSTGRES_PORT")
-host=os.getenv("POSTGRES_HOST")
+port="5432"
+host="localhost"
 base_name="calendar_app"
-#os.getenv("POSTGRES_BASE")
 register_tortoise(
     app, 
     db_url=f"postgres://"+username+":"+password+"@"+host+":"+port+"/"+base_name,
