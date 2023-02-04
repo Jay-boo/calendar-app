@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import DashboardHeader from "../components/DashboardHeader";
 import { Link, useNavigate } from "react-router-dom";
 import FastAPIClient from '../client';
 import config from '../config';
-import Button from '../components/Button/Button';
-import FormInput from '../components/FormInput/FormInput';
+import FormInput from '../components/FormInput';
 import jwtDecode from "jwt-decode";
 
 const client = new FastAPIClient(config);
@@ -35,14 +33,15 @@ const Login = () => {
     }
 
     client.login(loginForm.username, loginForm.password)
-    // .then(() => {
-    //   navigate('/home')
-    // });
-    // .catch((err) => {
-    //   setLoading(false)
-    //   setError(true);
-    //   console.err(err)
-    // });
+      .then(() => {
+        navigate('/')
+      })
+      .catch((err) => {
+        setLoading(false)
+        setError(true);
+        console.log(err);
+        alert('Invalid credentials');
+      });
     setIsLoggedIn(true);
 
   }
@@ -81,57 +80,55 @@ const Login = () => {
 
 
   return (
-    <>
-      <section className="bg-black ">
-        <Link to="/"
-          className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mx-4">
-          HOME
-        </Link>
-        {displayButton}
+    <section className="bg-black ">
+      <Link to="/"
+        className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mx-4">
+        HOME
+      </Link>
+      {displayButton}
 
-        {!isLoggedIn && <Link
-          className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white"
-          to={`/sign-up`}>
-          Create Account
-        </Link>}
+      {!isLoggedIn && <Link
+        className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white"
+        to={`/sign-up`}>
+        Create Account
+      </Link>}
 
-        <div className="flex items-center justify-center min-h-screen bg-gray-100 text-left ">
-          <div className="w-full max-w-xs m-auto bg-indigo-100 rounded p-5 shadow-lg">
-            <form >
+      <div className="flex items-center justify-center min-h-screen bg-gray-100 text-left ">
+        <div className="w-full max-w-xs m-auto bg-indigo-100 rounded p-5 shadow-lg">
+          <form >
 
-              <FormInput
-                type={"text"}
-                name={"username"}
-                label={"Username"}
-                error={error.username}
-                value={loginForm.username}
-                onChange={(e) => {
-                  setLoginForm({ ...loginForm, username: e.target.value });
-                }}
-              />
-              <FormInput
-                type={"password"}
-                name={"password"}
-                label={"Password"}
-                error={error.username}
-                value={loginForm.password}
-                onChange={(e_bis) => {
-                  setLoginForm({
-                    ...loginForm, password: e_bis.target.value
-                  });
-                }}
-              />
-            </form>
-            {/* <footer> */}
-            {/*   <Link className="text-teal-700 hover:text-blue-900 text-sm float-right" to="/sign-up">Create Account</Link> */}
-            {/* </footer> */}
-          </div>
-          <button onClick={(e) => {
-            onLogin(e);
-          }}>Submit</button>
+            <FormInput
+              type={"text"}
+              name={"username"}
+              label={"Username"}
+              error={error.username}
+              value={loginForm.username}
+              onChange={(e) => {
+                setLoginForm({ ...loginForm, username: e.target.value });
+              }}
+            />
+            <FormInput
+              type={"password"}
+              name={"password"}
+              label={"Password"}
+              error={error.username}
+              value={loginForm.password}
+              onChange={(e_bis) => {
+                setLoginForm({
+                  ...loginForm, password: e_bis.target.value
+                });
+              }}
+            />
+          </form>
+          {/* <footer> */}
+          {/*   <Link className="text-teal-700 hover:text-blue-900 text-sm float-right" to="/sign-up">Create Account</Link> */}
+          {/* </footer> */}
         </div>
-      </section>
-    </>
+        <button onClick={(e) => {
+          onLogin(e);
+        }}>Submit</button>
+      </div>
+    </section>
   )
 }
 

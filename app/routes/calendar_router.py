@@ -23,7 +23,7 @@ Calendar_Pydantic=pydantic_model_creator(User_calendar,name="UserToCalendar")
 @router.post("/create_calendar")
 async def create_calendar(user:User_Pydantic=Depends(get_current_user)):
     user_calendar_obj=await User_calendar.create(user_id=user.user_id)
-    return {"message",f"calendar create for {user.username}"}
+    return {"calendar_id":user_calendar_obj.calendar_id}
 
 
 
@@ -97,7 +97,8 @@ async def add_event_to_calendar(calendar_id:int,event:EventCreate_Pydantic,user:
 
                 )
         print(new_event);
-        return {"id": calendar_orm.event_id,"start_time":new_event.start_time.strftime("%Y-%m-%dT%H:%M:%S.%fZ"), "end_time":new_event.end_time.strftime("%Y-%m-%dT%H:%M:%S.%fZ")}
+        # return {"id": calendar_orm.event_id,"start_time":new_event.start_time.strftime("%Y-%m-%dT%H:%M:%S.%fZ"), "end_time":new_event.end_time.strftime("%Y-%m-%dT%H:%M:%S.%fZ")}
+        return {"id": calendar_orm.event_id,"start_time":new_event.start_time, "end_time":new_event.end_time}
     else:
         return {"error"}
 

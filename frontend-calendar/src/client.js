@@ -80,17 +80,23 @@ class FastAPIClient {
     });
   }
 
-  getCalendar() {
-    return this.apiClient.get('/get_calendars').then(({ data }) => {
+  async getCalendar() {
+    return await this.apiClient.get('/get_calendars').then(({ data }) => {
       return data;
     });
   }
+
+
+
+
+
+
   removeEvent(event_id) {
 
   }
 
-  getEventsCalendar(id) {
-    return this.apiClient.get(`/calendar/${id}`).then(({ data }) => {
+  async getEventsCalendar(id) {
+    return await this.apiClient.get(`/calendar/${id}`).then(({ data }) => {
       return data;
     });
   }
