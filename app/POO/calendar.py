@@ -24,6 +24,10 @@ class Calendar:
 
     def remove_event(self,event:Event):
         self.events.remove(event)
+    
+    def load_calendar(self,list_event):
+        
+        self.events=list_event;
 
 
     def __str__(self) -> str:
