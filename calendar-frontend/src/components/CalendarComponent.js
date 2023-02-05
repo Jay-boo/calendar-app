@@ -18,7 +18,7 @@ class CalendarComponent extends React.Component {
         constructor(props) {
                 super(props);
                 this.state = {
-                        events: defaultEvents,
+                        events: [],
                         id: "",
                         title: "",
                         start: "",
@@ -38,6 +38,7 @@ class CalendarComponent extends React.Component {
         componentDidMount() {
                 console.log("componentDidMount -CalendarComponnent", this.props.calendar_id);
                 client.getEventsCalendar(this.props.calendar_id).then(response => {
+                        console.log("response", response);
                         response = response.map(
                                 ({ start_date, created_at, type, property, description, event_id, end_date, calendar_id, title }) => {
                                         return {
@@ -53,6 +54,7 @@ class CalendarComponent extends React.Component {
                         this.setState({ events: response });
                 })
                         .catch((err => {
+                                console.log("error");
                                 console.log(err);
                         }));
 
@@ -172,17 +174,28 @@ class CalendarComponent extends React.Component {
                         type: type,
                 }
                 //POST ADD REQUEST TO GET EFFECTIVE TIMES
-                await client.apiClient.post(`/calendar/${this.props.calendar_id}/add_event`, form_data).then((resp) => {
+                await client.apiClient.post(`/calendar/${this.props.calendar_id}/event`, form_data).then((resp) => {
                         return (resp.data);
                 }).then(
                         (data) => {
-                                const effective_appointement = { id: data.id, title, start: data.start_time, end: data.end_time, desc, type, property };
-                                previous_state.push(effective_appointement);
+                                const new_state = [];
+                                for (var i = 0; i < data.length; i++) {
+                                        new_state.push({
+                                                title: data[i].title,
+                                                desc: data[i].description,
+                                                id: data[i].id_event,
+                                                property: data[i].property,
+                                                start: data[i].start_date,
+                                                end: data[i].end_date,
+                                                type: data[i].type,
+
+                                        });
+                                };
+                                this.setState({ events: new_state });
                         }).catch((err => {
                                 console.log(err);
                         }));
 
-                this.setState(previous_state);
         }
 
 
@@ -282,6 +295,7 @@ class CalendarComponent extends React.Component {
                                 }}
                         />
                 ];
+                console.log("this.state.events", this.state.events);
 
 
 
