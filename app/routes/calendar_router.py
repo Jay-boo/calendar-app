@@ -25,9 +25,9 @@ router=APIRouter()
 Calendar_Pydantic=pydantic_model_creator(User_calendar,name="UserToCalendar")
 
 #Create one calendar
-@router.post("/calendar",response_model = Calendar_Pydantic)
+@router.post("/calendar/{name_calendar}",response_model = Calendar_Pydantic)
 async def create_calendar(name_calendar:str,user:User_Pydantic=Depends(get_current_user)):
-    user = await User_account.get(id_user=user.id_use
+    user = await User_account.get(id_user=user.id_user)
     user_calendar_obj=await User_calendar.create(user=user,name_calendar=name_calendar)
     return user_calendar_obj
 
