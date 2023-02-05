@@ -1,0 +1,11 @@
+fastapi
+uvicorn
+psycopg2-binary
+passlib
+pytest
+python-dotenv
+tortoise-orm
+pyjwt
+pytz
+python-multipart
+asyncpg

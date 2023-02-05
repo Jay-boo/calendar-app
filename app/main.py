@@ -13,10 +13,6 @@ from fastapi.middleware.cors import CORSMiddleware
 
 load_dotenv()
 
-# Load the calendar
-# calendar=load_calendar(db,0)
-calendar=Calendar(
-        )
 app = FastAPI()
 
 origins = [
@@ -40,17 +36,15 @@ app.add_middleware(
 @app.get("/")
 def root():
         return {"hello":"world"}
-@app.get("/hello")
-def hello():
-        return {"hello":"hello"}
+
+
+
 
 POSTGRES_HOST=os.getenv("POSTGRES_HOST")
 POSTGRES_DB=os.getenv("POSTGRES_DB")
 POSTGRES_USER=os.getenv("POSTGRES_USER")
 POSTGRES_PASSWORD=os.getenv("POSTGRES_PASSWORD")
 POSTGRES_PORT=os.getenv("POSTGRES_PORT")
-
-
 
 
 register_tortoise(
@@ -61,10 +55,23 @@ register_tortoise(
     add_exception_handlers=True
 )
 
+# username="postgres"
+# password="azerty"
+# port="5432"
+# host="localhost"
+# base_name="calendar_app"
+# register_tortoise(
+#     app, 
+#     db_url=f"postgres://"+username+":"+password+"@"+host+":"+port+"/"+base_name,
+#     modules={'models': ['models.user','models.calendarModel']},
+#     generate_schemas=True,
+#     add_exception_handlers=True
+# )
+
 app.include_router(auth.router)
 app.include_router(calendar_router.router)
 
 
 
 if __name__=="__main__":
-    uvicorn.run("main:app", host="127.0.0.1", port=8000, log_level="info")
+    uvicorn.run("main:app", host="127.0.0.1", port=8000, log_level="info",reload=True)

@@ -4,9 +4,9 @@ from POO.event import Event
 from POO.eventSchool import EventSchool
 from POO.eventLeasure import EventLeasure
 from POO.calendar import Calendar
+import pytz
 
-
-now=datetime.now()
+now=datetime.now().replace(tzinfo=pytz.utc)
 
 event_1_interval=[now+timedelta(hours=3),now+timedelta(hours=6)]
 add_configs={

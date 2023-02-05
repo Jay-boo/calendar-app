@@ -11,7 +11,7 @@ router=APIRouter()
 
 @router.get("/")
 def root(request:Request):
-    return {"message": "hello"}
+    return {"message": "hello "}
 
 
 @router.get('/me',response_model=User_Pydantic)

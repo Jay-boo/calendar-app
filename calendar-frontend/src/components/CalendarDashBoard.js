@@ -21,8 +21,9 @@ class CalendarDashboard extends React.Component {
     // get all entities - GET
     client.getCalendar()
       .then(response => {
+        console.log("respoo", response);
         this.setState({
-          calendars_id: response.map((cal) => cal.calendar_id)
+          calendars_id: response.map((cal) => cal.id_calendar)
         })
       })
       .catch(err => {

@@ -81,7 +81,7 @@ class FastAPIClient {
   }
 
   async getCalendar() {
-    return await this.apiClient.get('/get_calendars').then(({ data }) => {
+    return await this.apiClient.get('/calendar').then(({ data }) => {
       return data;
     });
   }
