@@ -23,10 +23,10 @@ Calendar_Pydantic=pydantic_model_creator(User_calendar,name="UserToCalendar")
 
 #Create one calendar
 @router.post("/calendar",response_model = Calendar_Pydantic)
-async def create_calendar(user:User_Pydantic=Depends(get_current_user)):
+async def create_calendar(name_calendar:str,user:User_Pydantic=Depends(get_current_user)):
     user = await User_account.get(id_user=user.id_user)
 
-    user_calendar_obj=await User_calendar.create(user=user)
+    user_calendar_obj=await User_calendar.create(user=user,name_calendar=name_calendar)
     return user_calendar_obj
 
 # Get all calendar
@@ -60,6 +60,7 @@ async def delete_calendar(calendar_id:int,user:User_Pydantic=Depends(get_current
     if not calendar:
         raise HTTPException(status_code=404, detail=f"{user.username} doesn't have {calendar_id} calendar")
     events=await CalendarModel.filter(calendar_id=calendar_id).delete()
+    calendar=await User_calendar.filter(user_id=user.id_user  , id_calendar=calendar_id).delete()
 
    
 

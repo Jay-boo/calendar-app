@@ -7,6 +7,7 @@ from passlib.hash import bcrypt
 class User_calendar(Model):
     id_calendar=fields.IntField(pk=True)
     user=fields.ForeignKeyField('models.User_account')
+    name_calendar = fields.CharField(60)
 
 
 class CalendarModel(Model):
