@@ -40,9 +40,9 @@ class CalendarComponent extends React.Component {
                 client.getEventsCalendar(this.props.calendar_id).then(response => {
                         console.log("response", response);
                         response = response.map(
-                                ({ start_date, created_at, type, property, description, event_id, end_date, calendar_id, title }) => {
+                                ({ start_date, created_at, type, property, description, id_event, end_date, calendar_id, title }) => {
                                         return {
-                                                id: event_id,
+                                                id: id_event,
                                                 title: title,
                                                 start: start_date,
                                                 end: end_date,
@@ -234,16 +234,39 @@ class CalendarComponent extends React.Component {
 
 
         //  filters out specific event that is to be deleted and set that variable to state
-        deleteEvent() {
+        async deleteEvent() {
                 console.log("deleteEvent()");
                 console.log(this.state);
                 console.log("POST request /removeEvent/event_id", this.state.id);
+
+                await client.apiClient.delete(`/calendar/${this.props.calendar_id}/event/${this.state.id}`).then((resp) => {
+                        return (resp.data);
+                }).then(
+                        (data) => {
+                                console.log("data", data);
+                                const new_state = [];
+                                for (var i = 0; i < data.length; i++) {
+                                        new_state.push({
+                                                title: data[i].title,
+                                                desc: data[i].description,
+                                                id: data[i].id_event,
+                                                property: data[i].property,
+                                                start: data[i].start_date,
+                                                end: data[i].end_date,
+                                                type: data[i].type,
+
+                                        });
+                                };
+                                this.setState({ events: new_state });
+                        }).catch((err => {
+                                console.log(err);
+                        }));
 
                 let updatedEvents = this.state.events.filter(
                         event => event["id"] !== this.state.id
                 );
                 // localStorage.setItem("cachedEvents", JSON.stringify(updatedEvents));
-                this.setState({ events: updatedEvents });
+                // this.setState({ events: updatedEvents });
         }
 
 
