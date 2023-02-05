@@ -30,7 +30,8 @@ CREATE TABLE User_account (
 -- Create the User_calendar table
 CREATE TABLE User_calendar (
     user_id INTEGER REFERENCES User_account(id_user) ,
-    id_calendar SERIAL PRIMARY KEY 
+    id_calendar SERIAL PRIMARY KEY ,
+    name_calendar VARCHAR(255)
 );
 
 -- Create the Calendar table
