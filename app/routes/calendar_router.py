@@ -27,7 +27,7 @@ Calendar_Pydantic=pydantic_model_creator(User_calendar,name="UserToCalendar")
 #Create one calendar
 @router.post("/calendar",response_model = Calendar_Pydantic)
 async def create_calendar(name_calendar:str,user:User_Pydantic=Depends(get_current_user)):
-    user = await User_account.get(id_user=user.id_use
+    user = await User_account.get(id_user=user.id_user)
     user_calendar_obj=await User_calendar.create(user=user,name_calendar=name_calendar)
     return user_calendar_obj
 
@@ -82,57 +82,8 @@ async def delete_calendar(calendar_id:int,user:User_Pydantic=Depends(get_current
 
 
 
-Event_Pydantic=pydantic_model_creator(CalendarModel,name='EventIn',exclude_readonly=True)
-class EventCreate_Pydantic(BaseModel):
-        title:str 
-        description:str
-        start_date: datetime
-        end_date:datetime
-        property:str
-        type:str
 
-
-# -------------------------------CONFLIT--------------------------
-# Necessité : En entrée il faut pas que je doivent mettre un event_id
-#---------------------------------------------------------------------
-
-
-# @router.post("/calendar/{calendar_id}/add_event")
-# async def add_event_to_calendar(calendar_id:int,event:EventCreate_Pydantic,user:User_Pydantic=Depends(get_current_user)):
-#     print(event.title)
-#     print(event.start_date)
-#     print(event.end_date)
-#     calendar=await get_calendar(calendar_id,user)
-#     if calendar!={"error":f"{user.username} doesn't have {calendar_id} calendar"}:
-#         print("-------------OK")
-#         events=[  EventLeasure(title=evet.title,desc=evet.description,start_time=evet.start_date.replace(tzinfo=None),end_time=evet.end_date.replace(tzinfo=None),activity="React")for evet in calendar]
-#         new_event=EventLeasure(title=event.title,desc=event.description,start_time=event.start_date.replace(tzinfo=None),end_time=event.end_date.replace(tzinfo=None),activity="React")
-#         calendar_POO=Calendar()
-#         calendar_POO.load_calendar(events)
-#         print(calendar_POO)
-#         print("--------load_success")
-#         print(new_event)
-#         calendar_POO.add_event(new_event)
-#         print("--------ok")
-#         calendar_orm= await CalendarModel.create(
-#                 calendar_id=calendar_id,
-#                 title=new_event.title,
-#                 description=new_event.desc,
-#                 created_at=new_event.created_at.strftime("%Y-%m-%dT%H:%M:%S.%fZ"),
-#                 start_date=new_event.start_time.strftime("%Y-%m-%dT%H:%M:%S.%fZ"),
-#                 end_date=new_event.end_time.strftime("%Y-%m-%dT%H:%M:%S.%fZ"),
-#                 type=event.type,
-#                 property=new_event.property
-#
-#                 )
-#         print(new_event);
-#         # return {"id": calendar_orm.event_id,"start_time":new_event.start_time.strftime("%Y-%m-%dT%H:%M:%S.%fZ"), "end_time":new_event.end_time.strftime("%Y-%m-%dT%H:%M:%S.%fZ")}
-#         return {"id": calendar_orm.event_id,"start_time":new_event.start_time, "end_time":new_event.end_time}
-#     else:
-#         return {"error"}
-
-
-
+Event_Pydantic=pydantic_model_creator(CalendarModel,name="EventIn",exclude_readonly=True)
 
 @router.post("/calendar/{calendar_id}/event")
 async def add_event_to_calendar(calendar_id:int,event:Event_Pydantic,user:User_Pydantic=Depends(get_current_user)):
@@ -176,7 +127,6 @@ async def add_event_to_calendar(calendar_id:int,event:Event_Pydantic,user:User_P
     calendar_obj.events=events_obj
     calendar_obj.add_event(event)
 
-    print(calendar_obj)
 
     deleted_job = await CalendarModel.filter(calendar_id=calendar_id).delete()
     tasks = [CalendarModel.create(calendar_id=calendar_id,
