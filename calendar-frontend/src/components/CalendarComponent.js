@@ -8,6 +8,7 @@ import Dialog from "material-ui/Dialog";
 import TimePicker from "material-ui/TimePicker";
 import TextField from "material-ui/TextField";
 import FastAPIClient from "../client";
+import { RadioButton, RadioButtonGroup } from "material-ui/RadioButton";
 import config from "../config";
 require("react-big-calendar/lib/css/react-big-calendar.css");
 
@@ -44,8 +45,8 @@ class CalendarComponent extends React.Component {
                                         return {
                                                 id: id_event,
                                                 title: title,
-                                                start: start_date,
-                                                end: end_date,
+                                                start: new Date(start_date),
+                                                end: new Date(end_date),
                                                 desc: description,
                                                 type: type,
                                                 property: property
@@ -67,8 +68,8 @@ class CalendarComponent extends React.Component {
                                         return {
                                                 id: event_id,
                                                 title: title,
-                                                start: start_date,
-                                                end: end_date,
+                                                start: new Date(start_date),
+                                                end: new Date(end_date),
                                                 desc: description,
                                                 type: type,
                                                 property: property
@@ -159,12 +160,11 @@ class CalendarComponent extends React.Component {
                 console.log("setNewAppointment()");
 
                 const { id, start, end, title, desc, type, property } = this.state;
+                console.log("state- newAPpoint", this.state);
 
 
 
 
-                const previous_state = this.state.events;
-                let appointment = { id, title, start, end, desc, type, property };
                 const form_data = {
                         title: title,
                         description: desc,
@@ -185,8 +185,8 @@ class CalendarComponent extends React.Component {
                                                 desc: data[i].description,
                                                 id: data[i].id_event,
                                                 property: data[i].property,
-                                                start: data[i].start_date,
-                                                end: data[i].end_date,
+                                                start: new Date(data[i].start_date),
+                                                end: new Date(data[i].end_date),
                                                 type: data[i].type,
 
                                         });
@@ -204,12 +204,24 @@ class CalendarComponent extends React.Component {
 
 
         //  Updates Existing Appointments Title and/or Description
-        updateEvent() {
+        async updateEvent() {
                 console.log("updateEvent()", this.state);
                 const { id, title, desc, start, end, events, type, property, clickedEvent } = this.state;
                 const index = events.findIndex(event => event === clickedEvent);
                 console.log("POST request with event_id", this.state.id);
                 console.log("POST remove event then add_event to calendar", this.state);
+                const form_data = {
+                        title: title,
+                        description: desc,
+                        start_date: start.toISOString(),
+                        end_date: end.toISOString(),
+                        property: property,
+                        type: type,
+                };
+                await client.apiClient.put(`/calendar/${this.props.calendar_id}/event/${this.state.id}`, form_data).then((resp) => {
+                        console.log("updateEvetn", resp.data);
+                        return (resp.data);
+                });
 
                 const updatedEvent = events.slice();
                 updatedEvent[index].id = id;
@@ -314,6 +326,7 @@ class CalendarComponent extends React.Component {
                                 primary={true}
                                 keyboardFocused={true}
                                 onClick={() => {
+
                                         this.setNewAppointment(), this.handleClose();
                                 }}
                         />
@@ -327,7 +340,8 @@ class CalendarComponent extends React.Component {
                                 {/* react-big-calendar library utilized to render calendar*/}
                                 <BigCalendar
                                         events={this.state.events}
-                                        views={["month"]}
+                                        views={["month", "week", "day", "agenda"]}
+
                                         timeslots={2}
                                         defaultView="month"
                                         defaultDate={new Date()}
@@ -360,23 +374,20 @@ class CalendarComponent extends React.Component {
                                                 }}
                                         />
                                         <br />
-                                        <TextField
-                                                floatingLabelText="Type"
-                                                onChange={e => {
-                                                        this.setType(e.target.value);
-                                                }}
-                                        />
+                                        <br />
+                                        <RadioButtonGroup onChange={e => {
+                                                console.log("IN radio button", e.target.value);
+                                                this.setType(e.target.value);
+                                        }} name="select-type" >
+                                                <RadioButton value="leasure" label="Loisir" />
+                                                <RadioButton value="school" label="Scolaire" />
+                                        </RadioButtonGroup>
+
                                         <br />
                                         <TextField
                                                 floatingLabelText="Property"
                                                 onChange={e => {
                                                         this.setProperty(e.target.value);
-                                                }}
-                                        />
-                                        <TextField
-                                                floatingLabelText="id (tmp)"
-                                                onChange={e => {
-                                                        this.setID(e.target.value);
                                                 }}
                                         />
                                         <TimePicker
