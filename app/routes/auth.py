@@ -3,6 +3,7 @@ import jwt
 from fastapi import  Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from passlib.hash import bcrypt
+from pydantic import BaseModel
 from tortoise.contrib.pydantic import pydantic_model_creator
 from models.user import User_account
 
@@ -18,7 +19,9 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl='token')
 User_Pydantic =pydantic_model_creator(User_account,name='User')
 UserIn_Pydantic=pydantic_model_creator(User_account,name='UserIn',exclude_readonly=True)
 
-
+class UserCreate_Pydantic(BaseModel):
+        username:str 
+        password:str
 
 
 
@@ -58,8 +61,8 @@ async def generate_token(form_data: OAuth2PasswordRequestForm=Depends()):
 
 
 @router.post('/user',response_model=User_Pydantic)
-async def create_user(user:UserIn_Pydantic):
-        user_obj=User_account(username=user.username,password_hash=bcrypt.hash(user.password_hash))
+async def create_user(user:UserCreate_Pydantic):
+        user_obj=User_account(username=user.username,password_hash=bcrypt.hash(user.password))
         await user_obj.save()
         return await User_Pydantic.from_tortoise_orm(user_obj)
 
