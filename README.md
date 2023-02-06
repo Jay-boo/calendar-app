@@ -7,3 +7,11 @@ docker run -it -d --name db-calendar-app -v db-volume:/var/lib/postgresql/data p
 docker exec -it db-calendar-app -U postgres
 ```
 
+
+# REquirement :
+ ```
+sudo apt  install git
+sudo apt  install docker.io
+sudo apt  install docker-compose
+sudo apt install curl
+ ```

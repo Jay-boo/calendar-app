@@ -1,0 +1,47 @@
+version: '3'
+services:
+  calendar_postgres:
+    container_name: calendar_postgres
+    image: calendar_postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - "/var/run/postgresql:/var/run/postgresql"
+    environment:
+      POSTGRES_PASSWORD: azerty
+      POSTGRES_USER: postgres
+  calendar_api:
+    restart: always
+    container_name: calendar_api
+    image: calendar_api
+    ports:
+      - "80:80"
+    environment:
+      POSTGRES_HOST: calendar_postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: calendar_app
+      POSTGRES_PASSWORD: azerty
+      POSTGRES_USER: postgres
+    links:
+      - calendar_postgres:calendar_postgres
+    healthcheck:
+        test: ["CMD", "curl", "-f", "http://localhost:80"]
+        interval: 10s
+        timeout: 2s
+        retries: 5
+  calendar_front:
+    container_name: calendar_front
+    image: calendar_front
+    ports:
+      - "3000:3000"
+    environment:
+      REACT_APP_API_PORT: 80
+      REACT_APP_API_HOST: http://localhost
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80"]
+      interval: 10s
+      timeout: 2s
+      retries: 5
+
+
+

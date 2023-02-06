@@ -7,7 +7,7 @@ docker run --name calendar_postgres -d -v /var/run/postgresql:/var/run/postgresq
 # docker start calendar_postgres
 #docker exec -it calendar_postgres psql -U postgres #For interactive
 
-
+sleep 2
 cd ../app
 docker build -t calendar_api .
 ip_calapp=$(docker container inspect -f '{{ .NetworkSettings.IPAddress }}' calendar_postgres)
