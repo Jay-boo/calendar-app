@@ -61,20 +61,27 @@ class CalendarComponent extends React.Component {
 
         }
         componentWillReceiveProps(nextProps) {
-                console.log("component", nextProps);
+                console.log("componentWillReceiveProps------------------------------", nextProps);
                 client.getEventsCalendar(nextProps.calendar_id).then(response => {
-                        response = response.map(
-                                ({ start_date, created_at, type, property, description, event_id, end_date, calendar_id, title }) => {
-                                        return {
-                                                id: event_id,
-                                                title: title,
-                                                start: new Date(start_date),
-                                                end: new Date(end_date),
-                                                desc: description,
-                                                type: type,
-                                                property: property
-                                        };
-                                });
+                        console.log(response);
+                        console.log("length", response.length);
+                        if (response.length != 0) {
+                                response = response.map(
+                                        ({ start_date, created_at, type, property, description, event_id, end_date, calendar_id, title }) => {
+                                                return {
+                                                        id: event_id,
+                                                        title: title,
+                                                        start: new Date(start_date),
+                                                        end: new Date(end_date),
+                                                        desc: description,
+                                                        type: type,
+                                                        property: property
+                                                };
+                                        });
+                        } else {
+                                response = [];
+                        }
+                        console.log("response", response);
                         this.setState({ events: response });
                 })
                         .catch((err => {

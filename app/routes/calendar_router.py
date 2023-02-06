@@ -55,7 +55,7 @@ async def get_calendar(calendar_id:int,user:User_Pydantic=Depends(get_current_us
     #else : We 're gonna look for events
     events=await CalendarModel.filter(calendar_id=calendar_id)
     if not events:
-        return {}
+        return [] 
     else:
         return events
 

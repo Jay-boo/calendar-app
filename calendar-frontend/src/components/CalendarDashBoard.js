@@ -4,6 +4,8 @@ import React from "react";
 import FastAPIClient from "../client";
 import config from "../config";
 import CalendarComponent from "./CalendarComponent";
+import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
+import FlatButton from "material-ui/FlatButton";
 
 const client = new FastAPIClient(config);
 
@@ -13,7 +15,8 @@ class CalendarDashboard extends React.Component {
     this.state = {
       calendars: [],
       selected_id: 0,
-      name_new_cal: ""
+      name_new_cal: "",
+      to_deleted_id: 0,
     };
     this.create = this.create.bind(this);
   }
@@ -53,6 +56,33 @@ class CalendarDashboard extends React.Component {
     this.setState({ calendars_id: previous_state });
 
   }
+  async delete(e) {
+    console.log("delete()");
+    console.log("actual state", this.state);
+    // const calendars_id = this.state.calendars_id.slice();
+    let previous_state = this.state.calendars;
+    // const new_cal = client.addCalendar().then((response) => { return (response) });
+    await client.apiClient.delete(`/calendar/${parseInt(this.state.to_deleted_id)}`).then((resp) => {
+      console.log("creast POST data", resp.data);
+    })
+      .catch(err => {
+        console.log(err);
+      });
+
+    this.setState({ to_deleted_id: 0 });
+    client.getCalendar()
+      .then(response => {
+        console.log("response", response);
+
+        this.setState({
+          calendars: response
+        })
+      })
+      .catch(err => {
+        console.log(err);
+      });
+
+  }
 
 
   // get_calendars() {
@@ -74,6 +104,11 @@ class CalendarDashboard extends React.Component {
 
     this.setState({ selected_id: e.target.value });
   }
+  setDeleteNameCalendar(e) {
+    console.log("setDelete");
+    this.setState({ to_deleted_id: e });
+  }
+
 
   render() {
     console.log("render()");
@@ -84,18 +119,38 @@ class CalendarDashboard extends React.Component {
       return <option value={cal_id.id_calendar}>{cal_id.name_calendar}</option>;
     });
 
+    const deleteGrp = this.state.calendars.map((cal_id) => {
+      return <RadioButton value={cal_id.id_calendar} label={cal_id.name_calendar} />;
+    });
+
     return (
       <div>
         <h1>CalendarDashBoard</h1>
+        <h2> Add  New Calendar</h2>
 
         <MuiThemeProvider>
           <TextField
             floatingLabelText="calendar name"
             onChange={e => { this.setName(e.target.value); }} />
+          <FlatButton label="Create" onClick={e => { this.create(e); }} />
         </MuiThemeProvider>
 
 
-        <button onClick={(e) => this.create(e)}> Add Calendar</button>
+
+        {/* <button onClick={(e) => this.create(e)}> Add Calendar</button> */}
+        <br />
+        <br />
+        <h2> Remove Calendar</h2>
+        <MuiThemeProvider>
+          <RadioButtonGroup name="del-select" onChange={e => {
+            console.log("e", e);
+            this.setDeleteNameCalendar(e.target.value);
+          }}>
+            {deleteGrp}
+          </RadioButtonGroup>
+          <FlatButton label="DELETE" onClick={e => { this.delete(e); }} />
+        </MuiThemeProvider>
+
 
         <hr />
         {this.state.calendars.length > 0 && (
