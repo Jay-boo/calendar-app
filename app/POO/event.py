@@ -8,7 +8,7 @@ from POO.reminder import Reminder
 
 class Event(ABC):
 
-    def __init__(self,title:str,desc:str,start_time:datetime,end_time:datetime,id:int=None) -> None:
+    def __init__(self,title:str,desc:str,start_time:datetime,end_time:datetime) -> None:
         assert start_time < end_time
         self.id=id
         self.title=title

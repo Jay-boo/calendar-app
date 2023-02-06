@@ -11,8 +11,7 @@ def transfrom_with_strat(evn:Event,type,property):
             desc=evn.desc,
             start_time=evn.start_time,
             end_time=evn.end_time,
-            activity=property,
-            id=evn.id
+            activity=property
             )
         elif type.lower() == "school":
             return EventSchool(
@@ -20,8 +19,7 @@ def transfrom_with_strat(evn:Event,type,property):
             desc=evn.desc,
             start_time=evn.start_time,
             end_time=evn.end_time,
-            id_salle=property,
-            id=evn.id
+            id_salle=property
             )
         else:
             return False

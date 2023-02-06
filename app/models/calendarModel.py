@@ -14,12 +14,16 @@ class CalendarModel(Model):
     id_event=fields.IntField(pk=True)
     calendar=fields.ForeignKeyField('models.User_calendar')
     title=fields.CharField(60)
-    created_at=fields.DatetimeField(auto_now=True)
+    created_at=fields.DatetimeField(readonly=True) #(auto_now=True)
     start_date=fields.DatetimeField()
     end_date=fields.DatetimeField()
     description=fields.CharField(60)
     type=fields.CharField(50)
     property=fields.CharField(50)
+
+
+    class PydanticMeta:
+        exclude = ("created_at", )
     
     
 

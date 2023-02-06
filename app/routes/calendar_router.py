@@ -92,26 +92,33 @@ async def add_event_to_calendar(calendar_id:int,event:Event_Pydantic,user:User_P
             start_time=event.start_date,
             end_time=event.end_date,
             ),event.type,event.property)
+    
     if not event:
         raise HTTPException(status_code=404, detail="Type not valid")
+    event.id=None
     
             
     events_obj =[]
     for evn in events : 
-        events_obj.append(transfrom_with_strat(Event(
+        event_save = transfrom_with_strat(Event(
                     title=evn.title,
                     desc=evn.description,
                     start_time=evn.start_date,
-                    end_time=evn.end_date,
-                    id=evn.id_event
-                    ),evn.type,evn.property))
-                
+                    end_time=evn.end_date
+                    ),evn.type,evn.property)
+        event_save.created_at = evn.created_at
+        event_save.id=evn.id_event
+        events_obj.append(event_save)
+    
+    
     calendar_obj.events=events_obj
     calendar_obj.add_event(event)
 
+    print(calendar_obj)
+
     deleted_job = await CalendarModel.filter(calendar_id=calendar_id).delete()
     tasks = [CalendarModel.create(calendar_id=calendar_id,
-                                    id_event = evn.id,
+                                   id_event = evn.id,
                                    title=evn.title,
                                    created_at=evn.created_at.strftime("%Y-%m-%dT%H:%M:%S.%fZ"),
                                    start_date=evn.start_time.strftime("%Y-%m-%dT%H:%M:%S.%fZ"),
@@ -121,7 +128,7 @@ async def add_event_to_calendar(calendar_id:int,event:Event_Pydantic,user:User_P
                                    property=evn.property) if evn.id is not None 
             else CalendarModel.create(calendar_id=calendar_id,
                                    title=evn.title,
-                                   created_at=evn.created_at.strftime("%Y-%m-%dT%H:%M:%S.%fZ"),
+                                   created_at=datetime.now().replace(tzinfo=pytz.utc).strftime("%Y-%m-%dT%H:%M:%S.%fZ"),
                                    start_date=evn.start_time.strftime("%Y-%m-%dT%H:%M:%S.%fZ"),
                                    end_date=evn.end_time.strftime("%Y-%m-%dT%H:%M:%S.%fZ"),
                                    description=evn.desc,
@@ -179,22 +186,26 @@ async def update_event_to_calendar(calendar_id:int,event_id:int,event:Event_Pyda
             title=event.title,
             desc=event.description,
             start_time=event.start_date,
-            end_time=event.end_date,
-            id=event_id
+            end_time=event.end_date
             ),event.type,event.property)
+    
     if not event:
         raise HTTPException(status_code=404, detail="Type not valid")
+    event.id=event_id
+    event.created_at = datetime.now().replace(tzinfo=pytz.utc)
     
             
     events_obj =[]
     for evn in events : 
-        events_obj.append(transfrom_with_strat(Event(
+        event_save = transfrom_with_strat(Event(
                     title=evn.title,
                     desc=evn.description,
                     start_time=evn.start_date,
-                    end_time=evn.end_date,
-                    id=evn.id_event
-                    ),evn.type,evn.property))
+                    end_time=evn.end_date
+                    ),evn.type,evn.property)
+        event_save.created_at = evn.created_at
+        event_save.id=evn.id_event
+        events_obj.append(event_save)
                 
     calendar_obj.events=events_obj
     calendar_obj.add_event(event)

@@ -6,8 +6,8 @@ from POO.event import Event
 
 
 class EventSchool(Event):
-    def __init__(self,title:str,desc:str,start_time:datetime,end_time:datetime,id_salle:int,id:int=None) -> None:
-        super().__init__(title,desc,start_time,end_time,id)
+    def __init__(self,title:str,desc:str,start_time:datetime,end_time:datetime,id_salle:int) -> None:
+        super().__init__(title,desc,start_time,end_time)
         self.property=id_salle
         self.type="school"
         self.strategy= priorityStrategy()
