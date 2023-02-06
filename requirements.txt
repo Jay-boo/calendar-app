@@ -1,8 +1,0 @@
-fastapi
-uvicorn
-psycopg2-binary
-pytest
-python-dotenv
-tortoise-orm
-pyjwt
-passlib

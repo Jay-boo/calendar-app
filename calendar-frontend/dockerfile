@@ -1,0 +1,33 @@
+# pull official base image
+FROM node:13.12.0-alpine
+ARG REACT_APP_API_HOST
+#ENV API_HOST=$API_HOST
+ARG REACT_APP_API_PORT
+#ENV API_PORT=$API_PORT
+
+
+# set working directory
+WORKDIR /app
+
+# add `/app/node_modules/.bin` to $PATH
+ENV PATH /app/node_modules/.bin:$PATH
+
+# install app dependencies
+COPY package.json ./
+COPY package-lock.json ./
+RUN npm install --silent
+
+RUN npm install react-scripts@3.4.1 -g --silent
+
+
+
+
+
+# add app
+COPY . ./
+
+# RUN REACT_APP_API_PORT=${REACT_APP_API_PORT} \ 
+#     REACT_APP_API_HOST=${REACT_APP_API_HOST} 
+
+# start app
+CMD ["npm", "start"]
