@@ -11,7 +11,7 @@ from dotenv import load_dotenv
 import os 
 from fastapi.middleware.cors import CORSMiddleware
 
-load_dotenv()
+load_dotenv(dotenv_path="../.config/.env")
 
 app = FastAPI()
 
@@ -44,6 +44,12 @@ POSTGRES_DB=os.getenv("POSTGRES_DB")
 POSTGRES_USER=os.getenv("POSTGRES_USER")
 POSTGRES_PASSWORD=os.getenv("POSTGRES_PASSWORD")
 POSTGRES_PORT=os.getenv("POSTGRES_PORT")
+print("password")
+print(POSTGRES_PASSWORD)
+print(POSTGRES_PORT)
+print(POSTGRES_USER)
+print(POSTGRES_HOST)
+print(POSTGRES_DB)
 
 
 register_tortoise(

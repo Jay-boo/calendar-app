@@ -7,9 +7,9 @@ sudo apt  install docker-compose
 sudo apt install curl
  ```
 
-# Start
+#  Launch 
 ```
 bash create_run_start.sh
 # Or
-docker-compose up
+docker compose up --build 
 ```
