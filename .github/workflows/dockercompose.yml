@@ -8,4 +8,4 @@ jobs:
       - name: Build the stack
         run: docker-compose up -d
       - name: Test
-        run: docker run --network container:webapp-frontend appropriate/curl -s --retry 10 --retry-connrefused http://localhost:3000/
+        run: docker run --network container:calendar-frontend appropriate/curl -s --retry 10 --retry-connrefused http://localhost:3000/
