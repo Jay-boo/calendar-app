@@ -1,18 +1,95 @@
+# :round_pushpin: Calendar application
+
+A simple calendar application that allows users to view, add, and edit events.
+
+## Features
+
+- View events in a monthly or weekly format
+- Add new events with a title, date, start time, and end time
+- Edit or delete existing events
+- handle multiple calendars
+
+## Tech Stack :
+
+This calendar app is built using the following technologies:
+
+- React for front-end development
+- Python FastAPI for back-end development
+- PostgreSQL for storing events, calendars and  users
+
+## Table of contents
+ 
+ 1. [Requirements](#requirements)
+ 2. [Installation](#install)
+ 3. [Backend](#backend)
+ 4. [PostGreSQL](#postgresql)
+ 5. [FrontEnd](#frontend)
+ 6. [CI/CD](#cicd)
+ 7. [Azure deployment](#azure)
+***
+
+
+<div id='requirements'/>  
 
 # Requirements :
+
  ```
 sudo apt  install git
 sudo apt  install docker.io
 sudo apt  install docker-compose
 sudo apt install curl
  ```
+***
 
-#  Launch 
+<div id='install'/>  
+
+# :rocket: Installation
+
+Install with docker : Use of `docker-compose.yml` or control each container separately using `*.sh` files
+
+1. Clone repository
 ```
-bash create_run_start.sh
-# Or
+git clone https://github.com/Jay-boo/calendar-app.git
+```
+
+2. Write your configuration in `.env`
+```
+cd calendar-app
+```
+Example of a `.env` file :
+```
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=azerty
+```
+
+
+3.launch the `docker-compose.yml`
+
+```
 docker compose up --build 
 ```
+
+Or you can launch the 3 containers separately using `*.sh` files.
+
+
+<div id='backend'/>  
+
+***
+# BackEnd : FastAPI and POO
+
+<div id='postgresql'/>  
+
+***
+# PostgreSQL database
+
+<div id='frontend'/>  
+
+***
+# FrontEnd : React 
+
+***
+<div id='cicd'/>  
+
 # CI/CD
 
 ## Test
@@ -22,6 +99,7 @@ docker compose up --build
 ## Azure tag and push
 
 
+<div id='azure'/>  
 
 # Azure Deployements 
 
