@@ -29,7 +29,8 @@ This calendar app is built using the following technologies:
 ***
 
 
-<div id='requirements'/>  
+<div id='requirements'/>  ![image](https://user-images.githubusercontent.com/81867817/218329357-5c5c84bb-f0d8-4502-bf36-0c264c5f9dbd.png)
+
 
 # Requirements :
 
@@ -71,17 +72,141 @@ docker compose up --build
 
 Or you can launch the 3 containers separately using `*.sh` files.
 
+4.Open `localhost:3000` in your browser
+
 
 <div id='backend'/>  
 
 ***
 # BackEnd : FastAPI and POO
 
+## POO
+POO directory[`app/POO`](`app/POO/`)
+Use of strategy design pattern to attach 2 differents strategies to event. 2 strategies have been implemented. Each of them define the policy when a event is added to a calendar
+- [`allOrNothingStrategy`](app/POO/allOrNothingStrategy.py) :  If another calendar 's event occurs the wanted time interval, the event willnot be added 
+- [`priorityStrategy`](app/POO/priorityStrategy.py) : Don't mind if there is already an event scheduled at the event time interval , an event with this strategy will be added to the wanted calendar
+
+
+```mermaid
+classDiagram
+
+class Calendar {
+    __init__()
+    List[Event] events
+    add_event(Event)
+    get_events():List[Event]
+    remove_event(Event)
+    load_calendar(List[Event])
+}
+
+class Event {
+    <<Abstract>>
+  
+  int id
+  str title
+  datetime created_at
+  datetime updated_at
+  str desc
+  datetime start_time
+  datetime end_time
+  str type
+  Strategy strategy
+  List[Reminder] reminders
+  __init__(title:str,desc:str,start_time:datetime,end_time:datetime)
+  attachReminders(reminders:List[Reminder])
+  removeReminder(reminder:Reminder)
+  is_in_time_interval(t_start:datetime,t_end:datetime):bool
+  setStrategy(strategy:Strategy)
+}
+
+
+
+class EventLeasure {
+  str property
+}
+
+class EventSchool {
+  str property
+}
+
+class Reminder {
+  timedelta time_before_event
+  __init__(time_before_event:timedelta(minutes=5))
+}
+
+class addStrategy {
+    <<Abstract>>
+    add(start_time:datetime,end_time:datetime,calendar:Calendar)
+}
+
+class allOrNothingStrategy {
+    add(start_time:datetime,end_time:datetime,calendar:Calendar)
+}
+
+class priorityStrategy {
+    add(start_time:datetime,end_time:datetime,calendar:Calendar)
+}
+
+
+EventLeasure --|> Event : type="leasure"
+EventSchool --|> Event : type="school"
+addStrategy o--> Event : Chaque evenement a un object Strategy
+Event -- Reminder : A une ou plusieurs alertes >
+Calendar -- Event : <A pour evenements 
+
+allOrNothingStrategy --|> addStrategy 
+priorityStrategy --|> addStrategy 
+
+```
+
+
+## FastAPI
+
+You can find the different endpoints in  the [`app/routes` directory](app/routes)
+
+:lock: means that you need to be authenticated to use this endpoint. It's not a real argument to pass in the 
+request it's handle by localStorage in browser.
+
+List of differents endpoint and there use:
+
+Request| EndPoint | Args| Description |
+| --- | --- | --- |--- |
+|  `GET` | / |   ||
+|  `POST` | /user |  username,password |Create User |
+|  `POST` | /token |  username,password  |Generate User token |
+|  `GET` | /user/me |  :lock: |Return username and the hashed password|
+|`PUT` | /user | password, :lock: |Modify password of the active user |
+|  `DELETE` | /user | password, :lock: |Delete User |
+|  `POST` | /calendar/{name_calendar} |  name_calendar , :lock: |Create calendart with calendar name |
+|  `GET` | /calendar |  :lock: |Return the calendars of the active user |
+|  `GET` | /calendar/{calendar_id} |  calendar_id,:lock: |Return the events of the calendar targeted by calendar_id|
+|  `DELETE` | /calendar/{calendar_id} | calendar_id, :lock: |Delete one of the calendar of the active user |
+|  `POST` | /calendar/{calendar_id}/event |  calendar_id,`event_form` , :lock: |Add event to the calendar targeted by calendar_id |
+|  `DELETE` | /calendar/{calendar_id}/event/{event_id} |  calendar_id,event_id , :lock: |Delete an event of a calendar or the active user |
+|  `PUT` | /calendar/{calendar_id}/event/{event_id} |  calendar_id,event_id,`event_form` , :lock: |Update an event in a calendar |
+
+- `event_form` :
+```
+title: title,
+description: description,
+start_date: start_date,
+end_date: end_date,
+property: property,
+type: type
+```
+
+
+
+
+
 <div id='postgresql'/>  
 
 ***
 # PostgreSQL database
 
+Database architecture :
+
+![DiagramDB](img/diagDB.png)
 <div id='frontend'/>  
 
 ***
