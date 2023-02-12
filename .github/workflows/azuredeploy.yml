@@ -34,3 +34,17 @@ jobs:
           push: true
           tags: projetcalendar.azurecr.io/api
           file: ./app/dockerfile
+
+      - name: Build and push container postgres
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          tags: projetcalendar.azurecr.io/postgres
+          file: ./postgres/Dockerfile
+
+      - name: Build and push container front
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          tags: projetcalendar.azurecr.io/front
+          file: ./calendar-frontend/dockerfile
