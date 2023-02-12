@@ -45,6 +45,6 @@ jobs:
       - name: Build and push container front
         uses: docker/build-push-action@v2
         with:
+          context: ./calendar-frontend
           push: true
           tags: projetcalendar.azurecr.io/front
-          file: ./calendar-frontend/dockerfile
