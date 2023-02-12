@@ -1,18 +1,66 @@
+# :round_pushpin: Calendar application
+
+A simple calendar application that allows users to view, add, and edit events.
+
+## Features
+
+- View events in a monthly or weekly format
+- Add new events with a title, date, start time, and end time
+- Edit or delete existing events
+- handle multiple calendars
+
+## Tech Stack :
+
+This calendar app is built using the following technologies:
+
+- React for front-end development
+- Node.js for back-end development
+- PostgreSQL for storing events, calendars and  users
+
+***
 
 # Requirements :
+
  ```
 sudo apt  install git
 sudo apt  install docker.io
 sudo apt  install docker-compose
 sudo apt install curl
  ```
+***
 
-#  Launch 
+#  Installation
+
+Install with docker : Use of `docker-compose.yml` or control each container separately using `*.sh` files
+
+1. Clone repository
 ```
-bash create_run_start.sh
-# Or
+git clone https://github.com/Jay-boo/calendar-app.git
+```
+
+2. Write your configuration in `.env`
+```
+cd calendar-app
+```
+Example of a `.env` file :
+```
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=azerty
+```
+
+
+3.launch the `docker-compose.yml`
+
+```
 docker compose up --build 
 ```
+
+Or you can launch the 3 containers separately using `*.sh` files.
+
+
+
+***
+
 # CI/CD
 
 ## Test
