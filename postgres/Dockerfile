@@ -2,8 +2,8 @@ FROM library/postgres
 
 RUN apt update &&\
     apt install postgresql-client
-# ENV POSTGRES_PASSWORD azerty
-# ENV POSTGRES_USER postgres
+ENV POSTGRES_PASSWORD azerty
+ENV POSTGRES_USER postgres
 
 
 
