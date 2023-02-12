@@ -14,7 +14,7 @@ A simple calendar application that allows users to view, add, and edit events.
 This calendar app is built using the following technologies:
 
 - React for front-end development
-- Node.js for back-end development
+- Python FastAPI for back-end development
 - PostgreSQL for storing events, calendars and  users
 
 ***
