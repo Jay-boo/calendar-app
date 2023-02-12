@@ -38,7 +38,7 @@ jobs:
       - name: Build and push container postgres
         uses: docker/build-push-action@v2
         with:
-          context: ./postgres/Dockerfile
+          context: ./postgres
           push: true
           tags: projetcalendar.azurecr.io/postgres
 
