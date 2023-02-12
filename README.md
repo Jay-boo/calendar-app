@@ -30,7 +30,7 @@ We use a VM provided by Azure to deploy our App its available on :
 ## Azure App Services
 
 Our service are available with 2 Azure App Service, as the app service allow us to access only 1 port we had to create two distrinct app services.
-To see the result you can use thus link :
+To see the result you can use these link :
 + https://calendarfront.azurewebsites.net/ : To access to the frontend
 + https://calendarappli.azurewebsites.net/ : To access to the API
 
