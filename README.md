@@ -17,9 +17,11 @@ docker compose up --build
 
 ## Test
 
-## DOcker compose
+## Docker compose
 
 ## Azure tag and push
+
+
 
 # Azure Deployements 
 
