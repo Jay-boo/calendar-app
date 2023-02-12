@@ -17,7 +17,19 @@ This calendar app is built using the following technologies:
 - Python FastAPI for back-end development
 - PostgreSQL for storing events, calendars and  users
 
+## Table of contents
+ 
+ 1. [Requirements](#requirements)
+ 2. [Installation](#install)
+ 3. [Backend](#backend)
+ 4. [PostGreSQL](#postgresql)
+ 5. [FrontEnd](#frontend)
+ 6. [CI/CD](#cicd)
+ 7. [Azure deployment](#azure)
 ***
+
+
+<div id='requirements'/>  
 
 # Requirements :
 
@@ -29,7 +41,9 @@ sudo apt install curl
  ```
 ***
 
-#  Installation
+<div id='install'/>  
+
+# :rocket: Installation
 
 Install with docker : Use of `docker-compose.yml` or control each container separately using `*.sh` files
 
@@ -58,8 +72,23 @@ docker compose up --build
 Or you can launch the 3 containers separately using `*.sh` files.
 
 
+<div id='backend'/>  
 
 ***
+# BackEnd : FastAPI and POO
+
+<div id='postgresql'/>  
+
+***
+# PostgreSQL database
+
+<div id='frontend'/>  
+
+***
+# FrontEnd : React 
+
+***
+<div id='cicd'/>  
 
 # CI/CD
 
@@ -70,6 +99,7 @@ Or you can launch the 3 containers separately using `*.sh` files.
 ## Azure tag and push
 
 
+<div id='azure'/>  
 
 # Azure Deployements 
 
