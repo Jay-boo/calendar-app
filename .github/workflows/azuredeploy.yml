@@ -31,9 +31,9 @@ jobs:
       - name: Build and push container api
         uses: docker/build-push-action@v2
         with:
+          context : ./app 
           push: true
           tags: projetcalendar.azurecr.io/api
-          file: ./app/dockerfile
 
       - name: Build and push container postgres
         uses: docker/build-push-action@v2
