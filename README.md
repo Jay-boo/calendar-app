@@ -266,7 +266,7 @@ services:
     links:
       - calendar_postgres:calendar_postgres
     healthcheck:
-        test: ["CMD", "curl", "-f", "http://localhost:80"]
+        test: ["CMD", "curl", "-f", "https://calendarappli.azurewebsites.net"]
         interval: 10s
         timeout: 2s
         retries: 5
