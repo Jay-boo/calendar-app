@@ -9,6 +9,8 @@ A simple calendar application that allows users to view, add, and edit events.
 - Edit or delete existing events
 - handle multiple calendars
 
+
+
 ## Tech Stack :
 
 This calendar app is built using the following technologies:
@@ -16,6 +18,8 @@ This calendar app is built using the following technologies:
 - React for front-end development
 - Python FastAPI for back-end development
 - PostgreSQL for storing events, calendars and  users
+
+:warning: Reminder feature is on the way. Not available with the API or with the frontend for the moment.
 
 ## Table of contents
  
@@ -29,7 +33,7 @@ This calendar app is built using the following technologies:
 ***
 
 
-<div id='requirements'/>  ![image](https://user-images.githubusercontent.com/81867817/218329357-5c5c84bb-f0d8-4502-bf36-0c264c5f9dbd.png)
+<div id='requirements'/>  
 
 
 # Requirements :
@@ -212,17 +216,32 @@ Database architecture :
 ***
 # FrontEnd : React 
 
+For the front end React.js has been used. 
+The code of the react app in in [`calendar-frontend`](calendar-frontend)
+
+You can find `config.js` and `client.js`that allows to connect to our API using [`axios`](https://axios-http.com/fr/docs/intro).
+Then the application is construct by 2 main  React components : 
+
+- `CalendarComponent`: Visualize a Calendar with events. Based on [`react-big-calendar`](https://www.npmjs.com/package/react-big-calendar)
+- `CalendarDashBoard`: Visualize every calendar of the active user and handle add or remove calendar request. When a calendar selected on this component, its child component `CalendarComponent` is updated to vizualize the chosen calendar. 
+
+Login are handle with the `Login.jsx` page using `client.js` to request API.When someone logged in its credential are stored in the localStorage of the user browser.
+Each following request will be intercept to put the credential in the request header before sending the request to the API.
+
+
+Moreover some external styled components have been used : [material-ui](https://mui.com/material-ui/)
+
 ***
 <div id='cicd'/>  
 
 # CI/CD
+You can find every CI/CD files in [`.github/workflows/`](.github/workflows/)
 
-## Test
+- Test : test POO
+- Docker compose : Test docker container network 
+- Azure tag and push
 
-## Docker compose
-
-## Azure tag and push
-
+***
 
 <div id='azure'/>  
 
@@ -266,7 +285,7 @@ services:
     links:
       - calendar_postgres:calendar_postgres
     healthcheck:
-        test: ["CMD", "curl", "-f", "http://localhost:80"]
+        test: ["CMD", "curl", "-f", "https://calendarappli.azurewebsites.net"]
         interval: 10s
         timeout: 2s
         retries: 5

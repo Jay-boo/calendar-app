@@ -11,10 +11,6 @@ npm start
 
 ## Features
 - Access different calendar
-- create event
-- Add Event
-- Add Calendar
-
-### :wrench: On the way
-- update event
-- delter event
+- Create User
+- Add/Remove Update Event
+- Add/Remove Calendar
