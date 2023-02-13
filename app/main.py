@@ -11,8 +11,7 @@ from dotenv import load_dotenv
 import os 
 from fastapi.middleware.cors import CORSMiddleware
 
-load_dotenv(dotenv_path="../.config/.env")
-
+load_dotenv()
 app = FastAPI()
 
 origins = [
