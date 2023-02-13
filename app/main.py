@@ -11,7 +11,7 @@ from dotenv import load_dotenv
 import os 
 from fastapi.middleware.cors import CORSMiddleware
 
-load_dotenv(dotenv_path="../.config/.env")
+load_dotenv()
 
 app = FastAPI()
 
@@ -44,12 +44,7 @@ POSTGRES_DB=os.getenv("POSTGRES_DB")
 POSTGRES_USER=os.getenv("POSTGRES_USER")
 POSTGRES_PASSWORD=os.getenv("POSTGRES_PASSWORD")
 POSTGRES_PORT=os.getenv("POSTGRES_PORT")
-print("password")
-print(POSTGRES_PASSWORD)
-print(POSTGRES_PORT)
-print(POSTGRES_USER)
-print(POSTGRES_HOST)
-print(POSTGRES_DB)
+
 
 
 register_tortoise(
@@ -60,18 +55,7 @@ register_tortoise(
     add_exception_handlers=True
 )
 
-# username="postgres"
-# password="azerty"
-# port="5432"
-# host="localhost"
-# base_name="calendar_app"
-# register_tortoise(
-#     app, 
-#     db_url=f"postgres://"+username+":"+password+"@"+host+":"+port+"/"+base_name,
-#     modules={'models': ['models.user','models.calendarModel']},
-#     generate_schemas=True,
-#     add_exception_handlers=True
-# )
+
 
 app.include_router(auth.router)
 app.include_router(calendar_router.router)
