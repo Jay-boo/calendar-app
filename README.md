@@ -9,6 +9,10 @@ A simple calendar application that allows users to view, add, and edit events.
 - Edit or delete existing events
 - handle multiple calendars
 
+You can add 2 kinds of event :
+- School event that have priority over other events.
+- Leasure event that aren't priority events.
+
 
 
 ## Tech Stack :
@@ -77,7 +81,7 @@ docker compose up --build
 
 Or you can launch the 3 containers separately `*.sh` files.
 
-4.Open `localhost:3000` in your browser
+4.Open `localhost:3000` in your browser to access frontend or `localhost:80` to access API
 
 You can use `*.sh` files to manage stuff :
 + `build.sh` : to build the images if you don't want to use the docker-compose
@@ -246,6 +250,9 @@ Each following request will be intercept to put the credential in the request he
 
 
 Moreover some external styled components have been used : [material-ui](https://mui.com/material-ui/)
+
+
+![frontend](img/frontend-capture.png)
 
 ***
 <div id='cicd'/>  
