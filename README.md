@@ -84,7 +84,7 @@ You can use `*.sh` files to manage stuff :
 + `start.sh` : start all the containers 
 + `stop.sh` : stop all the containers
 + `remove.sh` : remove all the containers
-+ `terraform_init.sh.sh` : To init the terraform connection (see in [Azure deployment](#azure))
++ `terraform_init.sh` : To init the terraform connection (see in [Azure deployment](#azure))
 + `start_AppServices.sh` : To start the App Services on Azure using terraform (see in [Azure deployment](#azure))
 + `stop_AppServices.sh` : To stop the App Services on Azure using terraform (see in [Azure deployment](#azure))
 
@@ -270,7 +270,7 @@ We use a VM provided by Azure to deploy our App its available on :
 ## Azure App Services
 
 You can managed the App serivces with 3 `*.sh`files :
-+ `terraform_init.sh.sh` : To init the terraform connection and import ressources (only execute 1 times)
++ `terraform_init.sh` : To init the terraform connection and import ressources (only execute 1 times)
 + `start_AppServices.sh` : To start the App Services on Azure using terraform 
 + `stop_AppServices.sh` : To stop the App Services on Azure using terraform 
 
