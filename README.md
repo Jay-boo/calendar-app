@@ -74,9 +74,24 @@ POSTGRES_PASSWORD=azerty
 docker compose up --build 
 ```
 
-Or you can launch the 3 containers separately using `*.sh` files.
+Or you can launch the 3 containers separately `*.sh` files.
 
 4.Open `localhost:3000` in your browser
+
+You can use `*.sh` files to manage stuff :
++ `build.sh` : to build the images if you don't want to use the docker-compose
++ `run.sh` : to excecute all your containers for the first time (eq to `docker build`)
++ `start.sh` : start all the containers 
++ `stop.sh` : stop all the containers
++ `remove.sh` : remove all the containers
++ `terraform_init.sh.sh` : To init the terraform connection (see in [Azure deployment](#azure))
++ `start_AppServices.sh` : To start the App Services on Azure using terraform (see in [Azure deployment](#azure))
++ `stop_AppServices.sh` : To stop the App Services on Azure using terraform (see in [Azure deployment](#azure))
+
+You can also find the images stored on azure (to pull and run):
++ `projetcalendar.azurecr.io/postgres`
++ `projetcalendar.azurecr.io/api`
++ `projetcalendar.azurecr.io/front`
 
 
 <div id='backend'/>  
@@ -251,7 +266,13 @@ You can find every CI/CD files in [`.github/workflows/`](.github/workflows/)
 We use a VM provided by Azure to deploy our App its available on :
 + http://calendarapp.westeurope.cloudapp.azure.com:3000/ : frontend
 + http://calendarapp.westeurope.cloudapp.azure.com:80/ : API
+
 ## Azure App Services
+
+You can managed the App serivces with 3 `*.sh`files :
++ `terraform_init.sh.sh` : To init the terraform connection and import ressources (only execute 1 times)
++ `start_AppServices.sh` : To start the App Services on Azure using terraform 
++ `stop_AppServices.sh` : To stop the App Services on Azure using terraform 
 
 Our service are available with 2 Azure App Service, as the app service allow us to access only 1 port we had to create two distrinct app services.
 To see the result you can use these link :
