@@ -50,9 +50,4 @@ variable AppOn {
   description = "Start or Stop App Services"
 }
 
-variable secret {
-  type        = string
-  default     = ""
-  description = "Secret"
-}
 
