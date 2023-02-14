@@ -87,6 +87,7 @@ You can use `*.sh` files to manage stuff :
 + `build.sh` : to build the images if you don't want to use the docker-compose
 + `run.sh` : to excecute all your containers for the first time (eq to `docker build`)
 + `start.sh` : start all the containers 
++ `build_run_start.sh` : execute the 3 previous script 1in one time
 + `stop.sh` : stop all the containers
 + `remove.sh` : remove all the containers
 + `terraform_init.sh` : To init the terraform connection (see in [Azure deployment](#azure))
@@ -263,6 +264,7 @@ You can find every CI/CD files in [`.github/workflows/`](.github/workflows/)
 - Test : test POO
 - Docker compose : Test docker container network 
 - Azure tag and push
+   Our images are stored in an Azure container registers. To allow us to always have the latest version on Azure we push the images we create an CI who push thes images at each changes, We also had to provided some secrets on github to make this work (allow github to send the images to Azure)
 
 ***
 
@@ -271,6 +273,9 @@ You can find every CI/CD files in [`.github/workflows/`](.github/workflows/)
 # Azure Deployements 
 
 ## VM
+
+For the VM there is no terraform setup to start is so if you want to see you will have to send us an email. For the VM we simply clone the github and  start the `build_run_start.sh` (because due to another version  of linux docker-compose didn't work)
+
 We use a VM provided by Azure to deploy our App its available on :
 + http://calendarapp.westeurope.cloudapp.azure.com:3000/ : frontend
 + http://calendarapp.westeurope.cloudapp.azure.com:80/ : API
@@ -281,6 +286,8 @@ You can managed the App serivces with 3 `*.sh`files :
 + `terraform_init.sh` : To init the terraform connection and import ressources (only execute 1 times)
 + `start_AppServices.sh` : To start the App Services on Azure using terraform 
 + `stop_AppServices.sh` : To stop the App Services on Azure using terraform 
+
+Before usign the `terraform_init.sh` you will need to complete the `main.tf` file located in the `terraform` folder with the information provided by mail. When you are going to start the App services with `start_AppServices.sh`at the end of the script you will have to write `yes` in your terminal (this is also the case when you will stop the App services)
 
 Our service are available with 2 Azure App Service, as the app service allow us to access only 1 port we had to create two distrinct app services.
 To see the result you can use these link :
