@@ -1,4 +1,5 @@
 # :round_pushpin: Calendar application
+**By Adrien Marquer and Jean-Alain MOREL**
 
 A simple calendar application that allows users to view, add, and edit events.
 
