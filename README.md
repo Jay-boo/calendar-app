@@ -78,7 +78,7 @@ POSTGRES_PASSWORD=azerty
 3.launch the `docker-compose.yml`
 
 ```
-docker compose up --build 
+docker-compose up --build 
 ```
 
 Or you can launch the 3 containers separately `*.sh` files.
