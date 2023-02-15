@@ -67,6 +67,7 @@ git clone https://github.com/Jay-boo/calendar-app.git
 2. Write your configuration in `.env`
 ```
 cd calendar-app
+touch .env
 ```
 Example of a `.env` file :
 ```
