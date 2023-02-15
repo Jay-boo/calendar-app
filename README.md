@@ -289,7 +289,7 @@ You can managed the App serivces with 3 `*.sh`files :
 + `start_AppServices.sh` : To start the App Services on Azure using terraform 
 + `stop_AppServices.sh` : To stop the App Services on Azure using terraform 
 
-Before usign the `terraform_init.sh` you will need to complete the `main.tf` file located in the `terraform` folder with the information provided by mail. When you are going to start the App services with `start_AppServices.sh`at the end of the script you will have to write `yes` in your terminal (this is also the case when you will stop the App services)
+Before usign the `terraform_init.sh` you will need to complete the `main.tf` file located in the `terraform` folder with the information provided by mail. When you are going to start the App services with `start_AppServices.sh.
 
 Our services are available with 2 Azure App Service, as the app service allow us to access only 1 port we had to create two distinct app services.
 To see the result you can use these link :
